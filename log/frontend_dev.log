@@ -7061,3 +7061,32 @@ Oct 21 11:24:51 symfony [info] {sfPartialView} Render "/Users/User/Sites/minevis
 Oct 21 11:24:51 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
 Oct 21 11:24:51 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
 Oct 21 11:24:51 symfony [info] {sfWebResponse} Send content (55778 o)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfRoute "sf_guard_signin" (/guard/login)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfRoute "sf_guard_signout" (/guard/logout)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_filter" (/guard/users/filter.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_batch" (/guard/users/batch.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user" (/guard/users.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_new" (/guard/users/new.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_create" (/guard/users.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_edit" (/guard/users/:id/edit.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_update" (/guard/users/:id.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_delete" (/guard/users/:id.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_show" (/guard/users/:id.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_object" (/guard/users/:id/:action.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Connect sfDoctrineRoute "sf_guard_user_collection" (/guard/users/:action/action.:sf_format)
+Oct 21 11:51:07 symfony [info] {sfPatternRouting} Match route "bicluster_show" (/bicluster/:id.:sf_format) for /bicluster/1463 with parameters array (  'module' => 'bicluster',  'action' => 'show',  'sf_format' => 'html',  'id' => '1463',)
+Oct 21 11:51:07 symfony [info] {sfFilterChain} Executing filter "sfRenderingFilter"
+Oct 21 11:51:07 symfony [info] {sfFilterChain} Executing filter "sfExecutionFilter"
+Oct 21 11:51:07 symfony [info] {biclusterActions} Call "biclusterActions->executeShow()"
+Oct 21 11:51:07 symfony [info] {sfPHPView} Render "/Users/User/Sites/minevis/apps/frontend/modules/bicluster/templates/showSuccess.php"
+Oct 21 11:51:07 symfony [info] {sfPartialView} Render "/Users/User/Sites/minevis/apps/frontend/modules/bicluster/templates/_singleBiCluster.php"
+Oct 21 11:51:07 symfony [info] {sfPartialView} Render "/Users/User/Sites/minevis/apps/frontend/modules/bicluster/templates/_miniBiCluster.php"
+Oct 21 11:51:07 symfony [info] {sfPHPView} Decorate content with "/Users/User/Sites/minevis/apps/frontend/templates/layout.php"
+Oct 21 11:51:07 symfony [info] {sfPHPView} Render "/Users/User/Sites/minevis/apps/frontend/templates/layout.php"
+Oct 21 11:51:07 symfony [info] {main} Get slot "title"
+Oct 21 11:51:07 symfony [info] {main} Get slot "current_menu"
+Oct 21 11:51:07 symfony [info] {main} Call "navigation->executeMenu()"
+Oct 21 11:51:07 symfony [info] {sfPartialView} Render "/Users/User/Sites/minevis/apps/frontend/modules/navigation/templates/_menu.php"
+Oct 21 11:51:07 symfony [info] {sfWebResponse} Send status "HTTP/1.1 200 OK"
+Oct 21 11:51:07 symfony [info] {sfWebResponse} Send header "Content-Type: text/html; charset=utf-8"
+Oct 21 11:51:07 symfony [info] {sfWebResponse} Send content (55778 o)
