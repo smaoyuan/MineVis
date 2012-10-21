@@ -348,39 +348,20 @@ function simpleBiClusterVis(clusterData, containerId) {
 
     // return all box elements in the "preview_vis" canvas
     var mineVisTable = preview_vis.setFinish();
-    
-    mineVisTable.hover(function(){
-                // this.attr({
-                //     fill: 'yellow'
-                // });
-                this.color = this.color || this.attr("fill");
-                this.stop().animate({fill: "blue"}, 500);
-            }, function(){
-                    this.stop().animate({fill: this.color}, 500);
-            });
-    // for( r = 0; r < gridY; r+=1) {
-        // for( c = 0; c < gridX; c+=1) {
-            // rectangle[0][0].hover(function(){
-            //     rectangle[0][0].attr({
-            //         fill: 'yellow'
-            //     });
-            // }, function(){
-            //         alert(this.c);
-            // });
-        // }
-    // }
-    // $(document).ready(function(){
-    //     alert("toggleswitch");
-    // });
 
-    // var over = function () {
-    //     //this.c = this.c || this.attr("fill");
-    //     this.stop().animate({fill: "#bacabd"}, 500);
-    // },
-    //     out = function () {
-    //         this.stop().animate({fill: "yellow"}, 500);
-    //     };
+    // mouse move in: changing color
+    var over = function() {
+        this.color = this.color || this.attr("fill");
+        this.stop().animate({fill: "#5555FF"}, 320);       
+    }
 
+    // mouse move out: change back to original color
+    var out = function() {
+        this.stop().animate({fill: this.color}, 320);       
+    }
+
+    // changing color for boxes when mouse moves in/out
+    mineVisTable.hover(over, out);
 }
 
 
