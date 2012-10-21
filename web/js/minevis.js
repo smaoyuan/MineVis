@@ -283,6 +283,19 @@ function simpleBiClusterVis(clusterData, containerId) {
     //init canvas
     var preview_vis = new Raphael(document.getElementById(containerId), sizex, sizey);
 
+    // text array to store names of the column and row
+    var crName = new Array();
+    // column names
+    crName[0] = new Array();
+    // row names
+    crName[1] = new Array();
+
+    // Element array to store retangles
+    var rectangle = new Array();
+    for( r = 0; r < gridY; r+=1) {
+        rectangle[r] = new Array();
+    }
+
     //draw axis y
     for( r = 0; r < gridY; r+=1) {
         x = margin - 5;
@@ -290,6 +303,9 @@ function simpleBiClusterVis(clusterData, containerId) {
         t = 'undefined';
         if (typeof clusterData.rows[r] != 'undefined' ) {
             t = clusterData.rows[r].name;
+
+            // initial row names array
+            crName[1][r] = t;
         }
         txt = preview_vis.text(x,y,t);
         txt.attr({
@@ -303,18 +319,15 @@ function simpleBiClusterVis(clusterData, containerId) {
         t = 'undefined';
         if (typeof clusterData.cols[c] != 'undefined' ) {
             t = clusterData.cols[c].name;
+
+            // initial column names array
+            crName[0][c] = t;
         }
         txt = preview_vis.text(x,y,t);
         txt.attr({
             'text-anchor': 'end'
         });
         txt.rotate(90,x,y);
-    }
-
-    // Element array to store retangles in the canvas
-    var rectangle = new Array();
-    for( r = 0; r < gridY; r+=1) {
-        rectangle[r] = new Array();
     }
 
     // starting choosing box elements in the "preview_vis" canvas
@@ -362,6 +375,23 @@ function simpleBiClusterVis(clusterData, containerId) {
 
     // changing color for boxes when mouse moves in/out
     mineVisTable.hover(over, out);
+
+    // row index for selected box
+    var rowIndex;
+    // column index for selected box
+    var columnIndex;
+    // find index for a certain rectangle
+    var findCRIndex = function(id) {
+        rowIndex = parseInt((id - rectangle[0][0].id) / gridX);
+        columnIndex = parseInt(id - (rectangle[0][0].id + rowIndex * gridX));
+    }
+
+    // click an item in the table to popup details
+    mineVisTable.click(function(){
+        findCRIndex(this.id);
+        alert(crName[1][rowIndex]);
+        alert(crName[0][columnIndex]);
+    });
 }
 
 
