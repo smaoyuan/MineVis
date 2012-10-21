@@ -1,0 +1,17 @@
+Mining:
+  swm1:
+    project_id: 1
+    type: 1
+    algorithm: 1
+    name: Basic Test Mining
+    param: '{"min_support":3,"min_columns":2}'
+    started: 0
+    complete: 0
+  cres1:
+    project_id: 5
+    type: 1
+    algorithm: 2
+    name: Crescent Mining
+    param: '{"min_support":3,"min_columns":3}'
+    started: 0
+    complete: 0

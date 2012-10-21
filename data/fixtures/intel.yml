@@ -1,0 +1,469 @@
+#
+# Project configs Fixutures
+#
+# For general intel datasets...
+#
+
+ProjectConfig:
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# Manpad
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+  manpad14:
+    Project: manpad
+    table_a: document
+    table_axb: document_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: location_id
+
+  manpad15:
+    Project: manpad
+    table_a: document
+    table_axb: document_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: organization_id
+
+  manpad16:
+    Project: manpad
+    table_a: document
+    table_axb: document_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: person_id
+
+  manpad17:
+    Project: manpad
+    table_a: document
+    table_axb: document_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: phone_id
+
+  manpad18:
+    Project: manpad
+    table_a: location
+    table_axb: location_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: organization_id
+
+  manpad19:
+    Project: manpad
+    table_a: location
+    table_axb: location_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: person_id
+
+  manpad20:
+    Project: manpad
+    table_a: location
+    table_axb: location_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: phone_id
+
+  manpad21:
+    Project: manpad
+    table_a: organization
+    table_axb: organization_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: person_id
+
+  manpad22:
+    Project: manpad
+    table_a: organization
+    table_axb: organization_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: phone_id
+
+  manpad23:
+    Project: manpad
+    table_a: person
+    table_axb: person_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: phone_id
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# Crescent
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+  crescent24:
+    Project: crescent
+    table_a: date
+    table_axb: document_date
+    table_b: document
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: doc_id
+
+  crescent25:
+    Project: crescent
+    table_a: document
+    table_axb: document_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: location_id
+
+  crescent26:
+    Project: crescent
+    table_a: document
+    table_axb: document_misc
+    table_b: misc
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: misc_id
+
+  crescent27:
+    Project: crescent
+    table_a: document
+    table_axb: document_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: money_id
+
+  crescent28:
+    Project: crescent
+    table_a: document
+    table_axb: document_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: organization_id
+
+  crescent29:
+    Project: crescent
+    table_a: document
+    table_axb: document_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: person_id
+
+  crescent30:
+    Project: crescent
+    table_a: document
+    table_axb: document_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: phone_id
+
+  crescent31:
+    Project: crescent
+    table_a: date
+    table_axb: date_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: location_id
+
+  crescent32:
+    Project: crescent
+    table_a: date
+    table_axb: date_misc
+    table_b: misc
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: misc_id
+
+  crescent33:
+    Project: crescent
+    table_a: date
+    table_axb: date_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: money_id
+
+  crescent34:
+    Project: crescent
+    table_a: date
+    table_axb: date_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: organization_id
+
+  crescent35:
+    Project: crescent
+    table_a: date
+    table_axb: date_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: person_id
+
+  crescent36:
+    Project: crescent
+    table_a: date
+    table_axb: date_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: phone_id
+
+  crescent37:
+    Project: crescent
+    table_a: location
+    table_axb: location_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: money_id
+
+  crescent38:
+    Project: crescent
+    table_a: location
+    table_axb: location_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: organization_id
+
+  crescent39:
+    Project: crescent
+    table_a: misc
+    table_axb: misc_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: location_id
+
+  crescent40:
+    Project: crescent
+    table_a: misc
+    table_axb: misc_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: money_id
+
+  crescent41:
+    Project: crescent
+    table_a: misc
+    table_axb: misc_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: organization_id
+
+  crescent42:
+    Project: crescent
+    table_a: misc
+    table_axb: misc_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: person_id
+
+  crescent43:
+    Project: crescent
+    table_a: organization
+    table_axb: organization_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: money_id
+
+  crescent44:
+    Project: crescent
+    table_a: person
+    table_axb: person_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: location_id
+
+  crescent45:
+    Project: crescent
+    table_a: person
+    table_axb: person_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: money_id
+
+  crescent46:
+    Project: crescent
+    table_a: person
+    table_axb: person_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: organization_id
+
+  crescent47:
+    Project: crescent
+    table_a: phone
+    table_axb: phone_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: location_id
+
+  crescent48:
+    Project: crescent
+    table_a: phone
+    table_axb: phone_misc
+    table_b: misc
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: misc_id
+
+  crescent49:
+    Project: crescent
+    table_a: phone
+    table_axb: phone_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: money_id
+
+  crescent50:
+    Project: crescent
+    table_a: phone
+    table_axb: phone_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: organization_id
+
+  crescent51:
+    Project: crescent
+    table_a: phone
+    table_axb: phone_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: person_id
+

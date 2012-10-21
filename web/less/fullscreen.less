@@ -1,0 +1,32 @@
+/*
+    Document   : fullscreen
+    Created on : Dec 28, 2011, 2:39:57 PM
+    Author     : thepunksnowman
+    Description:
+        This overrides some of the settings in the main stylesheet in order to
+        use the full size of the browser or more. No large margins.
+*/
+
+.section {
+    width: 100%; /* Use Full width of page */
+    margin: 0; /* Do not center sections, align left */
+}
+
+#browser {
+    width: 68%; /* 680px / 1000px */
+}
+
+#preview {
+    margin-right: 0; /* Cancel the -20 offset */
+    width: 29%; /* 290px / 1000px */
+
+    /* make menu floating */
+    position: absolute;
+    right: 0;
+    top: 860px; /* 260px (menus/spacing) + 600px (graph) */
+    float: none;
+}
+
+#footer {
+    display: none;
+}

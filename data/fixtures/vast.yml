@@ -1,0 +1,1364 @@
+#
+#
+#
+#
+#
+
+
+ProjectConfig:
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# VAST Atlantic Storm
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+  vast_as52:
+    Project: vast_as
+    table_a: date
+    table_axb: document_date
+    table_b: document
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: doc_id
+
+  vast_as53:
+    Project: vast_as
+    table_a: document
+    table_axb: document_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: money_id
+
+  vast_as54:
+    Project: vast_as
+    table_a: document
+    table_axb: document_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_as55:
+    Project: vast_as
+    table_a: document
+    table_axb: document_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: person_id
+
+  vast_as56:
+    Project: vast_as
+    table_a: document
+    table_axb: document_place
+    table_b: place
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: place_id
+
+  vast_as57:
+    Project: vast_as
+    table_a: date
+    table_axb: date_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: money_id
+
+  vast_as58:
+    Project: vast_as
+    table_a: date
+    table_axb: date_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_as59:
+    Project: vast_as
+    table_a: date
+    table_axb: date_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: person_id
+
+  vast_as60:
+    Project: vast_as
+    table_a: organization
+    table_axb: organization_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: money_id
+
+  vast_as61:
+    Project: vast_as
+    table_a: organization
+    table_axb: organization_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: person_id
+
+  vast_as62:
+    Project: vast_as
+    table_a: person
+    table_axb: person_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: money_id
+
+  vast_as63:
+    Project: vast_as
+    table_a: place
+    table_axb: place_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: place_id
+    table_axb_table_b_id_field: date_id
+
+  vast_as64:
+    Project: vast_as
+    table_a: place
+    table_axb: place_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: place_id
+    table_axb_table_b_id_field: money_id
+
+  vast_as65:
+    Project: vast_as
+    table_a: place
+    table_axb: place_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: place_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_as66:
+    Project: vast_as
+    table_a: place
+    table_axb: place_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: place_id
+    table_axb_table_b_id_field: person_id
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# VAST Stegosaurus
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+  vast_ste67:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: date_id
+
+  vast_ste68:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: email_id
+
+  vast_ste69:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: location_id
+
+  vast_ste70:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: money_id
+
+  vast_ste71:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_ste72:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: person_id
+
+  vast_ste73:
+    Project: vast_ste
+    table_a: document
+    table_axb: document_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_ste74:
+    Project: vast_ste
+    table_a: date
+    table_axb: date_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: email_id
+
+  vast_ste75:
+    Project: vast_ste
+    table_a: date
+    table_axb: date_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: money_id
+
+  vast_ste76:
+    Project: vast_ste
+    table_a: date
+    table_axb: date_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_ste77:
+    Project: vast_ste
+    table_a: date
+    table_axb: date_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_ste78:
+    Project: vast_ste
+    table_a: location
+    table_axb: location_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: date_id
+
+  vast_ste79:
+    Project: vast_ste
+    table_a: location
+    table_axb: location_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: email_id
+
+  vast_ste80:
+    Project: vast_ste
+    table_a: location
+    table_axb: location_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: money_id
+
+  vast_ste81:
+    Project: vast_ste
+    table_a: location
+    table_axb: location_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_ste82:
+    Project: vast_ste
+    table_a: location
+    table_axb: location_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_ste83:
+    Project: vast_ste
+    table_a: money
+    table_axb: money_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: money_id
+    table_axb_table_b_id_field: email_id
+
+  vast_ste84:
+    Project: vast_ste
+    table_a: money
+    table_axb: money_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: money_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_ste85:
+    Project: vast_ste
+    table_a: organization
+    table_axb: organization_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: email_id
+
+  vast_ste86:
+    Project: vast_ste
+    table_a: organization
+    table_axb: organization_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: money_id
+
+  vast_ste87:
+    Project: vast_ste
+    table_a: organization
+    table_axb: organization_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_ste88:
+    Project: vast_ste
+    table_a: person
+    table_axb: person_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: date_id
+
+  vast_ste89:
+    Project: vast_ste
+    table_a: person
+    table_axb: person_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: email_id
+
+  vast_ste90:
+    Project: vast_ste
+    table_a: person
+    table_axb: person_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: location_id
+
+  vast_ste91:
+    Project: vast_ste
+    table_a: person
+    table_axb: person_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_ste92:
+    Project: vast_ste
+    table_a: phone
+    table_axb: person_phone
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: person_id
+
+  vast_ste93:
+    Project: vast_ste
+    table_a: phone
+    table_axb: phone_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: email_id
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# VAST 2010
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+  vast_201094:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: date_id
+
+  vast_201095:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: email_id
+
+  vast_201096:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: location_id
+
+  vast_201097:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_misc
+    table_b: misc
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: misc_id
+
+  vast_201098:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: money_id
+
+  vast_201099:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_2010100:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2010101:
+    Project: vast_2010
+    table_a: document
+    table_axb: document_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2010102:
+    Project: vast_2010
+    table_a: date
+    table_axb: date_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010103:
+    Project: vast_2010
+    table_a: date
+    table_axb: date_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2010104:
+    Project: vast_2010
+    table_a: location
+    table_axb: location_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: date_id
+
+  vast_2010105:
+    Project: vast_2010
+    table_a: location
+    table_axb: location_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010106:
+    Project: vast_2010
+    table_a: location
+    table_axb: location_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: money_id
+
+  vast_2010107:
+    Project: vast_2010
+    table_a: location
+    table_axb: location_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_2010108:
+    Project: vast_2010
+    table_a: location
+    table_axb: location_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2010109:
+    Project: vast_2010
+    table_a: location
+    table_axb: location_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2010110:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: date_id
+
+  vast_2010111:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010112:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: location_id
+
+  vast_2010113:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: money_id
+
+  vast_2010114:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_2010115:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2010116:
+    Project: vast_2010
+    table_a: misc
+    table_axb: misc_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: misc_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2010117:
+    Project: vast_2010
+    table_a: money
+    table_axb: money_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: money_id
+    table_axb_table_b_id_field: date_id
+
+  vast_2010118:
+    Project: vast_2010
+    table_a: money
+    table_axb: money_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: money_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010119:
+    Project: vast_2010
+    table_a: money
+    table_axb: money_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: money_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2010120:
+    Project: vast_2010
+    table_a: organization
+    table_axb: organization_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: date_id
+
+  vast_2010122:
+    Project: vast_2010
+    table_a: organization
+    table_axb: organization_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010123:
+    Project: vast_2010
+    table_a: organization
+    table_axb: organization_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2010124:
+    Project: vast_2010
+    table_a: organization
+    table_axb: organization_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: money_id
+
+  vast_2010125:
+    Project: vast_2010
+    table_a: phone
+    table_axb: phone_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: phone_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010126:
+    Project: vast_2010
+    table_a: person
+    table_axb: person_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: date_id
+
+  vast_2010127:
+    Project: vast_2010
+    table_a: person
+    table_axb: person_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2010128:
+    Project: vast_2010
+    table_a: person
+    table_axb: person_money
+    table_b: money
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: money_id
+
+  vast_2010129:
+    Project: vast_2010
+    table_a: person
+    table_axb: person_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_2010130:
+    Project: vast_2010
+    table_a: person
+    table_axb: person_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: phone_id
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+# VAST Vastopolis
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - #
+  vast_2011131:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2011132:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: location_id
+
+  vast_2011133:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_2011134:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2011135:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2011136:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_url
+    table_b: url
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: url_id
+
+  vast_2011137:
+    Project: vast_2011
+    table_a: date
+    table_axb: date_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: date_id
+    table_axb_table_b_id_field: zipcode_id
+
+  vast_2011138:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_date
+    table_b: date
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: date_id
+
+  vast_2011139:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2011140:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_location
+    table_b: location
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: location_id
+
+  vast_2011141:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2011142:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2011143:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_url
+    table_b: url
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: url_id
+
+  vast_2011144:
+    Project: vast_2011
+    table_a: document
+    table_axb: document_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: doc_id
+    table_axb_table_b_id_field: zipcode_id
+
+  vast_2011145:
+    Project: vast_2011
+    table_a: email
+    table_axb: email_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: email_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2011146:
+    Project: vast_2011
+    table_a: email
+    table_axb: email_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: email_id
+    table_axb_table_b_id_field: zipcode_id
+
+  vast_2011147:
+    Project: vast_2011
+    table_a: location
+    table_axb: location_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2011148:
+    Project: vast_2011
+    table_a: location
+    table_axb: location_organization
+    table_b: organization
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: organization_id
+
+  vast_2011149:
+    Project: vast_2011
+    table_a: location
+    table_axb: location_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2011150:
+    Project: vast_2011
+    table_a: location
+    table_axb: location_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2011151:
+    Project: vast_2011
+    table_a: location
+    table_axb: location_url
+    table_b: url
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: url_id
+
+  vast_2011152:
+    Project: vast_2011
+    table_a: location
+    table_axb: location_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: location_id
+    table_axb_table_b_id_field: zipcode_id
+
+  vast_2011153:
+    Project: vast_2011
+    table_a: organization
+    table_axb: organization_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2011154:
+    Project: vast_2011
+    table_a: organization
+    table_axb: organization_person
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2011155:
+    Project: vast_2011
+    table_a: organization
+    table_axb: organization_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2011156:
+    Project: vast_2011
+    table_a: organization
+    table_axb: organization_url
+    table_b: url
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: url_id
+
+  vast_2011157:
+    Project: vast_2011
+    table_a: organization
+    table_axb: organization_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: organization_id
+    table_axb_table_b_id_field: zipcode_id
+
+  vast_2011158:
+    Project: vast_2011
+    table_a: person
+    table_axb: person_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2011159:
+    Project: vast_2011
+    table_a: person
+    table_axb: person_phone
+    table_b: phone
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: phone_id
+
+  vast_2011160:
+    Project: vast_2011
+    table_a: person
+    table_axb: person_url
+    table_b: url
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: url_id
+
+  vast_2011161:
+    Project: vast_2011
+    table_a: person
+    table_axb: person_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: zipcode_id
+
+  vast_2011162:
+    Project: vast_2011
+    table_a: url
+    table_axb: url_email
+    table_b: email
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: url_id
+    table_axb_table_b_id_field: email_id
+
+  vast_2011163:
+    Project: vast_2011
+    table_a: url
+    table_axb: person_url
+    table_b: person
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: url_id
+    table_axb_table_b_id_field: person_id
+
+  vast_2011164:
+    Project: vast_2011
+    table_a: url
+    table_axb: url_zipcode
+    table_b: zipcode
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: url_id
+    table_axb_table_b_id_field: zipcode_id
+
+

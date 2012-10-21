@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <style>
+            body {
+                background: #ddd;
+                color: black;
+                font-family: arial;
+            }
+            #workspace {
+                padding: 5px;
+                width: 1200px;
+                border-radius: 5px;
+                margin: 0 auto;
+                background: #333;
+            }
+
+        </style>
+        <link href="css/jquery.contextMenu.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="js/jquery.contextMenu.js"></script>
+        <script src="js/raphael.js" type="text/javascript" charset="utf-8"></script>
+        <script src="js/minegraph.js" type="text/javascript" charset="utf-8"></script>
+
+        <script type="text/javascript" charset="utf-8">
+            /**
+             * Dummy Data
+             */
+            var doc1 = {id: 1, name: "drag function", text: "Additionaly following drag events will be triggered: drag.start.<id> on start, drag.end.<id> on end and drag.move.<id> on every move. When element will be dragged over another element drag.over.<id> will be fired as well."};
+            var doc2 = {id: 2, name: "attr description", text: "Please refer to the SVG specification for an explanation of these parameters."};
+            var bicluster_data_11 = {"id":"53","grid":[[2,2],[2,2],[2,2],[2,2]],"rows":[{"row":"1","name":"27 April, 2003"},{"row":"3","name":"22 April, 2003"},{"row":"44","name":"January 1996"},{"row":"45","name":"1996"}],"cols":[{"col":"1","name":"The Netherlands"},{"col":"50","name":"Afghanistan"}],"row_type":"date","col_type":"location"};
+            var bicluster_data_12 = {"id":"73","grid":[[2,2],[2,2],[2,2],[2,2],[2,2]],"rows":[{"row":"1","name":"27 April, 2003"},{"row":"3","name":"22 April, 2003"},{"row":"7","name":"20 April, 2003"},{"row":"12","name":"16 April, 2003"},{"row":"19","name":"April 26, 2003"}],"cols":[{"col":"9","name":"North Bergen"},{"col":"45","name":"New Jersey"}],"row_type":"date","col_type":"location"};
+            var bicluster_data_36 = {"id":"183","grid":[[2,2,2,2],[2,2,2,2],[2,2,2,2],[2,2,2,2]],"rows":[{"row":"1","name":"27 April, 2003"},{"row":"41","name":"March, 1993"},{"row":"42","name":"1990 - 1992"},{"row":"43","name":"1987 - 1993"}],"cols":[{"col":"2","name":"Bagwant Dhaliwal"},{"col":"22","name":"Abdul Ramazi"},{"col":"45","name":"Sahim Albakri"},{"col":"46","name":"Muhammed bin Harazi"}],"row_type":"date","col_type":"person"};
+            var bicluster_data_84 = {"id":"408","grid":[[2,2,2,2],[2,2,2,2],[2,2,2,2],[2,2,2,2],[2,2,2,2]],"rows":[{"row":"5","name":"01 1207670734"},{"row":"1","name":"703-659-2317"},{"row":"4","name":"718-352-8479"},{"row":"3","name":"804-759-6302"},{"row":"2","name":"804-774-8920"}],"cols":[{"col":"1","name":"Hans Pakes"},{"col":"2","name":"Bagwant Dhaliwal"},{"col":"3","name":"Clark Webster"},{"col":"4","name":"Mukhtar Galab"}],"row_type":"phone","col_type":"person"};
+            var bicluster_data_77 = {"id":"303","grid":[[2,2],[2,2],[2,2],[2,2]],"rows":[{"row":"1","name":"Hans Pakes"},{"row":"2","name":"Bagwant Dhaliwal"},{"row":"3","name":"Clark Webster"},{"row":"43","name":"Abu al Masri"}],"cols":[{"col":"1","name":"The Netherlands"},{"col":"50","name":"Afghanistan"}],"row_type":"person","col_type":"location"};
+            var bicluster_data_18 = {"id":"198","grid":[[2,2,2,2,2],[2,2,2,2,2],[2,2,2,2,2],[2,2,2,2,2]],"rows":[{"row":"3","name":"22 April, 2003"},{"row":"4","name":"24 April, 2003"},{"row":"5","name":"April 30"},{"row":"6","name":"21 April, 2003"}],"cols":[{"col":"5","name":"01 1207670734"},{"col":"1","name":"703-659-2317"},{"col":"4","name":"718-352-8479"},{"col":"3","name":"804-759-6302"},{"col":"2","name":"804-774-8920"}],"row_type":"date","col_type":"phone"};
+
+            /**
+             * Start up code
+             */
+            $(document).ready(function() {
+                /*
+                 * Init Graph
+                 */
+                minegraph.init("workspace", 1200, 650);
+
+                /*
+                 * Document Dummy
+                 */
+                var d1 = minegraph.addDocument(doc1, 50, 50);
+                var d2 = minegraph.addDocument(doc2, 750, 80);
+
+                /**
+                 * Bicluster dummy
+                 */
+                var b1 = minegraph.addBic(bicluster_data_11, 200, 400);
+                var b2 = minegraph.addBic(bicluster_data_12, 400, 400);
+                var b3 = minegraph.addBic(bicluster_data_36, 600, 400);
+                var b4 = minegraph.addBic(bicluster_data_84, 650, 200);
+                var b5 = minegraph.addBic(bicluster_data_77, 150, 200);
+                var b6 = minegraph.addBic(bicluster_data_18, 850, 300);
+
+                /**
+                 * Link doc to doc
+                 */
+                minegraph.link(d1, d2);
+
+                /**
+                 * Link doc to bic
+                 */
+                minegraph.link(b1, d2);
+
+                /**
+                 * Link bic to bic
+                 */
+                minegraph.link(b1, b2); // row to row
+                minegraph.link(b2, b3); // row to row
+                minegraph.link(b3, b4); // col to col
+                minegraph.link(b1, b5); // col to col
+                minegraph.link(b5, b4); // row to col
+                minegraph.link(b6, b4); // col to row
+                /*
+                 *
+                 */
+
+                $('#resize a').click(function() {
+                    var size = $(this).text().split(' x ', 2);
+                    //alert('width' + size[0]+'height'+ size[1]);
+                    minegraph.resize(size[0],size[1]);
+                    // cancel page scroll
+                    return false;
+                });
+
+                //save
+                $('#file #save').click(function() {
+                    var minegraphSave = minegraph.save();
+                    console.log("Saving Data");
+                    console.log(minegraphSave);
+                    $('#file span').text("Last save: " + new Date(minegraph.last_save).toString());
+                    return false;
+                });
+                //load
+                $('#file #load').click(function() {
+                    alert('load');
+                    // cancel page scroll
+                    return false;
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="workspace"></div>
+        <div id="resize">
+            Workspace graph size:
+            <a href="#">1200 x 600</a>
+            <a href="#">2400 x 600</a>
+            <a href="#">2400 x 900</a>
+            <a href="#">3600 x 900</a>
+        </div>
+        <div id="file">
+            <a id="save" href="#">Manual Save</a>
+            <a id="load" href="#">Manual Load</a>
+            <span></span>
+        </div>
+        <ul id="bicMenu" class="contextMenu">
+            <li class=""><a href="#rotate">Rotate</a></li>
+            <li class=""><a href="#link">Link to</a></li>
+            <li class=""><a href="#docs">Show Docs</a></li>
+            <li class=" separator"><a href="#close">Close</a></li>
+        </ul>
+        <ul id="docMenu" class="contextMenu">
+            <li class=""><a href="#link">Link to</a></li>
+            <li class=""><a href="#docs">Show Docs</a></li>
+            <li class=" separator"><a href="#close">Close</a></li>
+        </ul>
+        <ul id="linkMenu" class="contextMenu">
+            <li class=""><a href="#up">Highlight</a></li>
+            <li class=" separator"><a href="#close">Close</a></li>
+        </ul>
+    </body>
+</html>

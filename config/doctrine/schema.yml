@@ -1,0 +1,202 @@
+#Schema for the database
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Feature Table
+#
+# For use on the test server, not very usefull since it keeps getting reset...
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Feature:
+  actAs: { Timestampable: ~ }
+  columns:
+    complete: { type: boolean, notnull: true }
+    name: { type: string(255), notnull: true, unique: true }
+    description: { type: string(255), notnull: false }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Project Tables
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Project:
+  actAs: { Timestampable: ~ }
+  columns:
+    name: { type: string(255), notnull: true, unique: true }
+    jigsaw_based: { type: boolean, notnull: true, default: false }
+    external_database: { type: string(255), notnull: true }
+
+ProjectConfig:
+  columns:
+    project_id: { type: integer, notnull: true }
+    table_a: { type: string(255), notnull: true }
+    table_axb: { type: string(255), notnull: true }
+    table_b: { type: string(255), notnull: true }
+    table_a_id_field: { type: string(255), notnull: true }
+    table_b_id_field: { type: string(255), notnull: true }
+    table_a_description_field: { type: string(255), notnull: true }
+    table_b_description_field: { type: string(255), notnull: true }
+    table_axb_table_a_id_field: { type: string(255), notnull: true }
+    table_axb_table_b_id_field: { type: string(255), notnull: true }
+  relations:
+    Project: { onDelete: CASCADE, local: project_id, foreign: id, foreignAlias: ProjectConfig }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Mining Tables
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Mining:
+  actAs: { Timestampable: ~ }
+  columns:
+    project_id: { type: integer, notnull: true }
+    type: { type: integer, notnull: true }
+    algorithm: { type: integer, notnull: true }
+    name: { type: string(255), notnull: true }
+    param: { type: string(255), notnull: true }
+    started: { type: boolean, notnull: true, default: 0 }
+    setup: { type: boolean, notnull: true, default: 0 }
+    complete: { type: boolean, notnull: true, default: 0 }
+    process_id: { type: integer, notnull: true, default: 0 } # store bg process id
+    document_link_status: { type: integer(1), notnull: true, default: 0 } # document linking status (run, running, didn't run...)
+    entity_frequency_status: { type: integer(1), notnull: true, default: 0 } # same for frequency table...
+  relations:
+    Project: { onDelete: CASCADE, local: project_id, foreign: id, foreignAlias: Minings }
+
+MiningJobMapping:
+  columns:
+    mining_id: { type: integer, notnull: true }
+    config_id: { type: integer, notnull: true }
+    status_code: { type: integer(1), notnull: true, default: 0 }
+    start_time: { type: datetime }
+    end_time: { type: datetime }
+  relations:
+    Mining: { onDelete: CASCADE, local: mining_id, foreign: id, foreignAlias: JobMappings }
+    ProjectConfig: { onDelete: CASCADE, local: config_id, foreign: id, foreignAlias: MiningJobMappings }
+
+MiningBiCluster:
+  columns:
+    mining_id: { type: integer, notnull: true }
+    config_id: { type: integer, notnull: true }
+  relations:
+    Mining: { onDelete: CASCADE, local: mining_id, foreign: id, foreignAlias: BiClusters }
+    ProjectConfig: { onDelete: CASCADE, local: config_id, foreign: id, foreignAlias: MiningBiCluster }
+
+MiningBiClusterRow:
+  columns:
+    bicluster_id: { type: integer, notnull: true }
+    row_id: { type: integer, notnull: true }
+  relations:
+    MiningBiCluster: { onDelete: CASCADE, local: bicluster_id, foreign: id, foreignAlias: Rows }
+
+MiningBiClusterCol:
+  columns:
+    bicluster_id: { type: integer, notnull: true }
+    col_id: { type: integer, notnull: true }
+  relations:
+    MiningBiCluster: { onDelete: CASCADE, local: bicluster_id, foreign: id, foreignAlias: Cols }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Chaining Tables
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Chaining:
+  actAs: { Timestampable: ~ }
+  columns:
+    mining_id: { type: integer, notnull: true }
+    name: { type: string(255), notnull: true }
+    param: { type: string(255), notnull: true }
+    configured: { type: boolean, notnull: true, default: 0 }
+    started: { type: boolean, notnull: true, default: 0 }
+    complete: { type: boolean, notnull: true, default: 0 }
+    process_id: { type: integer, notnull: true, default: 0 } # store bg process id
+  relations:
+    Mining: { onDelete: CASCADE, local: mining_id, foreign: id, foreignAlias: Chainings }
+
+ChainingLinkType:
+  columns:
+    chaining_id: { type: integer, notnull: true }
+    name: { type: string(255), notnull: true }
+    status_code: { type: integer(1), notnull: true, default: 0 }
+    start_time: { type: datetime }
+    end_time: { type: datetime }
+  relations:
+    Chaining: { onDelete: CASCADE, local: chaining_id, foreign: id, foreignAlias: LinkTypes }
+
+
+ChainingLink:
+  columns:
+    target_bicluster_id: { type: integer, notnull: true }
+    chaining_id: { type: integer, notnull: true }
+    chaining_link_type_id: { type: integer, notnull: true }
+    #project config???
+  relations:
+    #two relations to MiningBiCluster thanks to class attribute :)
+    TargetBiCluster: { class: MiningBiCluster, onDelete: CASCADE, local: target_bicluster_id, foreign: id, foreignAlias: TargetChainLinks }
+    #DestinationBiCluster: { class: MiningBiCluster, onDelete: CASCADE, local: destination_bicluster_id, foreign: id, foreignAlias: DestinationChainLinks }
+    Chaining: { onDelete: CASCADE, local: chaining_id, foreign: id, foreignAlias: Links }
+    ChainingLinkType: { onDelete: CASCADE, local: chaining_link_type_id, foreign: id, foreignAlias: Links }
+
+ChainingLinkDestination:
+  columns:
+    chaining_link_id: { type: integer, notnull: true }
+    destination_bicluster_id: { type: integer, notnull: true }
+    distance: { type: double, notnull: true }
+  relations:
+    DestinationBiCluster: { class: MiningBiCluster, onDelete: CASCADE, local: destination_bicluster_id, foreign: id, foreignAlias: DestinationChainLinks }
+    ChainingLink: { onDelete: CASCADE, local: chaining_link_id, foreign: id, foreignAlias: Destinations }
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+#
+# Visulalizations Tables
+#
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+Visualization:
+  actAs: { Timestampable: ~ }
+  columns:
+    project_id: { type: integer, notnull: true }
+    mining_id: { type: integer, notnull: true }
+    chaining_id: { type: integer, notnull: true }
+    name: { type: string(255), notnull: true }
+    jsondata: { type: clob, notnull: true }
+  relations:
+    Chaining: { onDelete: CASCADE, local: chaining_id, foreign: id, foreignAlias: Visualizations }
+    Mining: { onDelete: CASCADE, local: mining_id, foreign: id, foreignAlias: Visualizations }
+    Project: { onDelete: CASCADE, local: project_id, foreign: id, foreignAlias: Visualizations }
+
+# DocumentLink
+# This is used to lookup a doc's biclusters or a bicluster's doc
+# since it's easy to look up a bicluster's doc it will be used to generate a table
+# to look up the oooposite a doc's biclsuter...
+DocumentLink:
+  columns:
+    mining_id: { type: integer, notnull: true }
+    bicluster_id: { type: integer, notnull: true }
+    document_id: { type: integer, notnull: true }
+  relations:
+    Mining: { onDelete: CASCADE, local: mining_id, foreign: id, foreignAlias: DocumentLinks }
+    MiningBiCluster: { onDelete: CASCADE, local: bicluster_id, foreign: id, foreignAlias: DocumentLinks }
+
+# EntityFrequency
+# another helper for visualization.
+# a task will look up and count the biclusters for each entity and
+# for each it will store that count. used to display which entities are in
+# how many biclusters...
+EntityFrequency:
+  columns:
+    mining_id: { type: integer, notnull: true }
+    entity_id: { type: integer, notnull: true }
+    entity_name: { type: string(255), notnull: true }
+    entity_type: { type: string(255), notnull: true }
+    bicluster_count: { type: integer, notnull: true }
+  indexes:
+    entity:
+      fields: [entity_id]
+  relations:
+    Mining: { onDelete: CASCADE, local: mining_id, foreign: id, foreignAlias: EntityFrequencies }

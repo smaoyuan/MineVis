@@ -1,0 +1,38 @@
+----------------------------------------------------------------------------
+Symfony Maintemance commands
+----------------------------------------------------------------------------
+
+
+the point is to have an easy place to copy and paste commands here.. may be turn
+it into a script down the road.
+
+//List commands
+php symfony
+
+php symfony plugin:publish-assets
+
+// Build one by one
+php symfony doctrine:build --sql
+php symfony doctrine:build --model
+php symfony doctrine:insert-sql
+
+// Build all
+php symfony doctrine:build --all --no-confirmation
+
+// Load Data:
+php symfony doctrine:data-load
+
+// Do it all:
+php symfony doctrine:build --all --and-load
+
+// Generate task
+php symfony generate:task TASKNAME
+
+// Generate a view
+php symfony doctrine:generate-module --with-show --non-verbose-templates frontend job JobeetJob
+
+php symfony doctrine:generate-admin frontend JobeetJob --module=othername
+
+// Generate some users
+php symfony guard:create-user email@vt.edu fabien SecretPass
+php symfony guard:promote fabien

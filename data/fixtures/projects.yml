@@ -1,0 +1,49 @@
+#
+# Projects Fixutures
+#
+# This file inserts a bunch of sample projects so that I save time everytime
+# I nuke the db...
+#
+
+Project:
+  starwars:
+    name: Star Wars
+    external_database: starwars
+  dblp:
+    name: DBLP Project
+    external_database: dblp
+  imdb:
+    name: IMDB Project
+    external_database: imdb
+#  yfgdb:
+#    name: Yeast Functional Genomics
+#    external_database: yfgdb
+
+#                                          #
+#    Jigsaw Datasets                       #
+#                                          #
+  manpad:
+    name: Manpad Dataset
+    jigsaw_based: true
+    external_database: manpad
+  crescent:
+    name: Crescent Dataset
+    jigsaw_based: true
+    external_database: crescent
+  vast_as:
+    name: VAST Atlantic Storm
+    jigsaw_based: true
+    external_database: vast_atlanticstorm
+  vast_ste:
+    name: VAST Stegosaurus
+    jigsaw_based: true
+    external_database: vast_stegosaurus
+  vast_2010:
+    name: VAST 2010
+    jigsaw_based: true
+    external_database: vast_2010
+  vast_2011:
+    name: VAST Vastopolis
+    jigsaw_based: true
+    external_database: vast_vastopolis
+

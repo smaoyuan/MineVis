@@ -1,0 +1,165 @@
+#
+# Project configs Fixutures
+#
+# to save time writing this they're configured in the app and then
+# using SQL to YAML.php I turn the sql back into yaml
+# this way i can 'back them up' before i nuke the db for reuse..
+#
+#
+
+ProjectConfig:
+  starwars21:
+    Project: starwars
+    table_a: dates
+    table_axb: dates_activities
+    table_b: activities
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: date
+    table_b_description_field: desc
+    table_axb_table_a_id_field: dates_id
+    table_axb_table_b_id_field: activities_id
+
+  starwars22:
+    Project: starwars
+    table_a: people
+    table_axb: people_activities
+    table_b: activities
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: desc
+    table_axb_table_a_id_field: people_id
+    table_axb_table_b_id_field: activities_id
+
+  starwars23:
+    Project: starwars
+    table_a: people
+    table_axb: people_items
+    table_b: items
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: name
+    table_axb_table_a_id_field: people_id
+    table_axb_table_b_id_field: items_id
+
+  starwars24:
+    Project: starwars
+    table_a: people
+    table_axb: people_planets
+    table_b: planets
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: Planet
+    table_axb_table_a_id_field: people_id
+    table_axb_table_b_id_field: planets_id
+
+  starwars25:
+    Project: starwars
+    table_a: planets
+    table_axb: planets_activities
+    table_b: activities
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: Planet
+    table_b_description_field: desc
+    table_axb_table_a_id_field: planets_id
+    table_axb_table_b_id_field: activities_id
+
+  starwars26:
+    Project: starwars
+    table_a: items
+    table_axb: items_activities
+    table_b: activities
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: desc
+    table_axb_table_a_id_field: items_id
+    table_axb_table_b_id_field: activities_id
+
+  starwars27:
+    Project: starwars
+    table_a: items
+    table_axb: items_planets
+    table_b: planets
+    table_a_id_field: id
+    table_b_id_field: id
+    table_a_description_field: name
+    table_b_description_field: Planet
+    table_axb_table_a_id_field: items_id
+    table_axb_table_b_id_field: planets_id
+
+  imdb8:
+    Project: imdb
+    table_a: aka_name
+    table_axb: cast_info
+    table_b: aka_title
+    table_a_id_field: person_id
+    table_b_id_field: movie_id
+    table_a_description_field: name
+    table_b_description_field: title
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: movie_id
+
+  imdb9:
+    Project: imdb
+    table_a: aka_name
+    table_axb: cast_info
+    table_b: aka_title
+    table_a_id_field: person_id
+    table_b_id_field: movie_id
+    table_a_description_field: name
+    table_b_description_field: production_year
+    table_axb_table_a_id_field: person_id
+    table_axb_table_b_id_field: movie_id
+
+  imdb10:
+    Project: imdb
+    table_a: role_type
+    table_axb: cast_info
+    table_b: aka_name
+    table_a_id_field: id
+    table_b_id_field: person_id
+    table_a_description_field: role
+    table_b_description_field: name
+    table_axb_table_a_id_field: role_id
+    table_axb_table_b_id_field: person_id
+
+  imdb11:
+    Project: imdb
+    table_a: aka_title
+    table_axb: movie_link
+    table_b: aka_title
+    table_a_id_field: movie_id
+    table_b_id_field: movie_id
+    table_a_description_field: title
+    table_b_description_field: title
+    table_axb_table_a_id_field: movie_id
+    table_axb_table_b_id_field: linked_movie_id
+
+  imdb12:
+    Project: imdb
+    table_a: aka_title
+    table_axb: movie_link
+    table_b: link_type
+    table_a_id_field: movie_id
+    table_b_id_field: id
+    table_a_description_field: title
+    table_b_description_field: link
+    table_axb_table_a_id_field: movie_id
+    table_axb_table_b_id_field: link_type_id
+
+  imdb13:
+    Project: imdb
+    table_a: cast_info
+    table_axb: aka_title
+    table_b: kind_type
+    table_a_id_field: movie_id
+    table_b_id_field: id
+    table_a_description_field: person_role
+    table_b_description_field: kind
+    table_axb_table_a_id_field: movie_id
+    table_axb_table_b_id_field: kind_id

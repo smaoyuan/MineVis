@@ -1,0 +1,28 @@
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# #
+# # See documentation for your ORM's *:data-load task for more information.
+#
+sfGuardUser:
+  paaat:
+    first_name:     Patrick
+    last_name:      Fiaux
+    email_address:  pfiaux@vt.edu
+    username:       pfiaux
+    password:       woot
+    is_super_admin: true
+  naren:
+    first_name:     Naren
+    last_name:      Ramakrishnan
+    email_address:  naren@cs.vt.edu
+    username:       naren
+    password:       infovis
+    is_super_admin: true
+  north:
+    first_name:     Chris
+    last_name:      North
+    email_address:  north@cs.vt.edu
+    username:       north
+    password:       infovis
+    is_super_admin: true

@@ -1,0 +1,28 @@
+#use glob syntax.
+syntax: glob
+
+#Mac OS X stuff
+.DS_Store
+*~
+
+#Net beans
+nbproject/*
+
+#Ignore Symfony temp folders
+cache/*
+log/*
+
+#ignore hg .orig files...
+*.orig
+
+#ignore mineviz cache folders too
+summary.out
+
+#ignore mineviz dumps...
+dump/*
+
+#util stuff
+util/*.sql
+util/*/*.sql
+
+

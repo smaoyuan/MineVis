@@ -1,0 +1,245 @@
+
+# default rules
+homepage:
+  url:   /
+  param: { module: project, action: index }
+
+#
+# Project Rules
+#
+# main project routes now
+project:
+  class:   sfDoctrineRouteCollection
+  options: { model: Project }
+
+project_va:
+  url:   /project/:id/va
+  class:   sfDoctrineRoute
+  options: { model: Project, type: object }
+  param: { module: project, action: va }
+
+project_va_ajax:
+  url:     /project/:id/document.:sf_format
+  class:   sfDoctrineRoute
+  options: { model: Project, type: object }
+  param: { module: project, action: ajax, sf_format: json }
+  requirements:
+    sf_format: (json)
+
+# Config routes
+
+project_config_index:
+  url:   /project/:project_id/config
+  class:   sfDoctrineRoute
+  options: { model: ProjectConfig, type: object }
+  param: { module: project_config, action: index }
+
+project_config:
+  url: /project/:project_id/config/*
+  class:   sfDoctrineRouteCollection
+  options: { model: ProjectConfig }
+  requirements: { project_id: \d+ }
+
+project_config_show:
+  url: /project/:project_id/config/:id
+  class:   sfDoctrineRoute
+  options: { model: ProjectConfig, type: object }
+  param:   { module: project_config, action: show }
+  requirements:
+    id: \d+
+    project_id: \d+
+    sf_method: [get]
+
+project_config_edit:
+  url: /project/:project_id/config/:id/edit
+  class:   sfDoctrineRoute
+  options: { model: ProjectConfig, type: object }
+  param:   { module: project_config, action: edit }
+  requirements:
+    id: \d+
+    project_id: \d+
+    sf_method: [get]
+
+project_config_create:
+  url:     /project/:project_id/config
+  class:   sfDoctrineRoute
+  options: { model: ProjectConfig, type: object }
+  param:   { module: project_config, action: create }
+  requirements:
+    project_id: \d+
+    sf_method: post
+
+project_config_new:
+  url:     /project/:project_id/config/new
+  class:   sfDoctrineRoute
+  options: { model: ProjectConfig, type: object }
+  param:   { module: project_config, action: new }
+  requirements:
+    project_id: \d+
+    sf_method: get
+
+project_config_update:
+  url:     /project/:project_id/config/:id
+  class:   sfDoctrineRoute
+  options: { model: ProjectConfig, type: object }
+  param:   { module: project_config, action: update }
+  requirements:
+    id: \d+
+    project_id: \d+
+    sf_method: put
+
+project_config_fields1:
+  url:     /project/:project_id/fields.:sf_format
+  param:   { module: project_config, action: fields, sf_format: json }
+  requirements:
+    sf_format: (json)
+#second route because new and edit don't use the same path
+project_config_fields2:
+  url:     /project/:project_id/config/:id/fields.:sf_format
+  param:   { module: project_config, action: fields, sf_format: json }
+  requirements:
+    sf_format: (json)
+
+#
+#Mining Rules
+#
+project_mining_new:
+  url: /project/:project_id/mining/new
+  param: { module: mining, action: new }
+  requirements:
+    project_id: \d+
+    sf_method: get
+
+# Run mining algorithm
+mining_run:
+  url: /mining/:id/run
+  param: { module: mining, action: run }
+  requirements:
+    id: \d+
+    sf_method: get
+
+# Run Document Link Task
+mining_run_documentlink:
+  url: /mining/:id/run_documentlink
+  param: { module: mining, action: rundocumentlinks }
+  requirements:
+    id: \d+
+    sf_method: get
+
+# Run Entity Frequency Task
+mining_run_entityfrequency:
+  url: /mining/:id/run_entityfrequency
+  param: { module: mining, action: runentityfrequencies }
+  requirements:
+    id: \d+
+    sf_method: get
+
+mining:
+  class:   sfDoctrineRouteCollection
+  options: { model: Mining }
+
+#mining jobs
+mining_job_index:
+  url:   /mining/:mining_id/jobs
+  class:   sfDoctrineRoute
+  options: { model: MiningJobMapping, type: object }
+  param: { module: mining_job_mapping, action: index }
+
+#biclusters
+bicluster:
+  class:   sfDoctrineRouteCollection
+  options: { model: MiningBiCluster }
+
+#ajax bicluster
+bicluster_vis:
+  url:   /bicluster/:id/vis.:sf_format
+  class:   sfDoctrineRoute
+  options: { model: Bicluster, type: object }
+  param: { module: bicluster, action: getvis, sf_format: html }
+  requirements:
+    id: \d+
+    sf_format: (html)
+
+#
+#Chaining Rules
+#
+chaining_run:
+  url: /chaining/:id/run
+  param: { module: chaining, action: run }
+  requirements:
+    id: \d+
+    sf_method: get
+
+chaining:
+  class:   sfDoctrineRouteCollection
+  options: { model: Chaining }
+
+#link view
+bicluster_link:
+  class:   sfDoctrineRouteCollection
+  options: { model: ChainingLink }
+
+#ajax link vis
+bicluster_link_vis:
+  url:   /biclusterLink/:id/vis.:sf_format
+  class:   sfDoctrineRoute
+  options: { model: ChainingLink, type: object }
+  param: { module: bicluster_link, action: getvis, sf_format: html }
+  requirements:
+    id: \d+
+    sf_format: (html)
+
+
+# visualization links
+vis:
+  class:   sfDoctrineRouteCollection
+  options: { model: Visualization }
+
+vis_ajax:
+  url:     /vis/request.:sf_format
+  class:   sfDoctrineRoute
+  options: { model: Visualization, type: object }
+  param: { module: vis, action: ajax, sf_format: json }
+  requirements:
+    sf_format: (json)
+    sf_method: [get, post]
+
+vis_ajax_save:
+  url:     /vis/save
+  class:   sfDoctrineRoute
+  options: { model: Visualization, type: object }
+  param: { module: vis, action: ajaxsave }
+  requirements:
+    sf_method: [get, post]
+
+#
+# st guard routes
+#
+sf_guard_signin:
+  url:   /login
+  param: { module: sfGuardAuth, action: signin }
+sf_guard_signout:
+  url:   /logout
+  param: { module: sfGuardAuth, action: signout }
+sf_guard_password:
+  url:   /request_password
+  param: { module: sfGuardAuth, action: password }
+
+
+feature:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Feature
+    module:               feature
+    prefix_path:          /feature
+    column:               id
+    with_wildcard_routes: true
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

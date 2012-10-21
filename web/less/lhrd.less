@@ -1,0 +1,42 @@
+/*
+    Document   : lhrd
+    Created on : Jan 6, 2012, 11:06:48 AM
+    Author     : thepunksnowman
+    Description:
+        Make the layout a bit different to work on a high res display.
+        Assuming a size of 4 by 2 screen of 2560px by 1600px
+*/
+
+#workspace {
+    position: absolute;
+    top: 0;
+    left: 2560px;
+}
+
+#workspace h3, #resize {
+    display: none;
+}
+
+#browser {
+    float: none;
+    width: 1800px;
+    height: 2800px;
+}
+
+#ent_results, #f_ents, #b_bics, #b_docs, #b_chains {
+    height: 2650px;
+    overflow: scroll;
+}
+
+#preview {
+    margin-right: 0; /* Cancel the -20 offset */
+    width: 700px;
+    height: 900px;
+
+    /* make menu floating */
+    position: absolute;
+    top: 190px;
+    left: 1840px;
+    float: none;
+}
+
