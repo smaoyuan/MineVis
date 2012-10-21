@@ -388,9 +388,16 @@ function simpleBiClusterVis(clusterData, containerId) {
 
     // click an item in the table to popup details
     mineVisTable.click(function(){
-        findCRIndex(this.id);
-        alert(crName[1][rowIndex]);
-        alert(crName[0][columnIndex]);
+        if (this.color == '#aaa') 
+            alert("there is no bicluster for this item");
+        else if (this.color == '#FF6F00') {
+            findCRIndex(this.id);
+            alert("Connection between: \"" + crName[1][rowIndex] + "\" and \"" + crName[0][columnIndex] + "\".\n MiniView is shown below.");         
+        } else {
+            findCRIndex(this.id);
+            alert("Connection between: \"" + crName[1][rowIndex] + "\" and \"" + crName[0][columnIndex] + "\".");                    
+        }
+
     });
 }
 
