@@ -305,10 +305,13 @@ function simpleBiClusterVis(clusterData, containerId) {
             t = clusterData.rows[r].name;
 
             // initial row names array
-            crName[1][r] = t;
+            // crName[1][r] = t;
         }
-        txt = preview_vis.text(x,y,t);
-        txt.attr({
+        // txt = preview_vis.text(x,y,t);
+
+        crName[1][r] = preview_vis.text(x,y,t);
+
+        crName[1][r].attr({
             'text-anchor': 'end'
         });
     }
@@ -323,11 +326,13 @@ function simpleBiClusterVis(clusterData, containerId) {
             // initial column names array
             crName[0][c] = t;
         }
-        txt = preview_vis.text(x,y,t);
-        txt.attr({
+        //txt = preview_vis.text(x,y,t);
+        crName[1][r] = preview_vis.text(x,y,t);
+        crName[1][r].attr({
             'text-anchor': 'end'
         });
-        txt.rotate(90,x,y);
+        // txt.rotate(90,x,y);
+        crName[1][r].rotate(90,x,y);
     }
 
     // starting choosing box elements in the "preview_vis" canvas
@@ -365,12 +370,12 @@ function simpleBiClusterVis(clusterData, containerId) {
     // mouse move in: changing color
     var over = function() {
         this.color = this.color || this.attr("fill");
-        this.stop().animate({fill: "#5555FF"}, 320);       
+        this.stop().animate({fill: "#5555FF"}, 350);       
     }
 
     // mouse move out: change back to original color
     var out = function() {
-        this.stop().animate({fill: this.color}, 320);       
+        this.stop().animate({fill: this.color}, 350);       
     }
 
     // changing color for boxes when mouse moves in/out
