@@ -343,11 +343,131 @@ minegraph.addBic = function(jsonBic, x, y) {
     //set the main properties
     bic.type = "bicluster";
     bic.id = jsonBic['id'];
+
+    //record how many documents related to this bicluster
+    docNum = 0;
+
+    // Request Parameters
+    var request = new Object();
+    request['vis_id'] = vis_id;
+    request['ent_id'] = bic.id;
+    request['type'] = 'show_bic_docs';
+
+    // color biclusters based on the number of ducuments connected with
+    $.post("request.json",
+        request,
+        function(response) {
+            docNum = response.length;  
+            // console.log("the inside docNum is: " + docNum);
+
+            bic.source_data = jsonBic;
+            bic.width = gridX * cellW + 2 * margin;
+            bic.height = gridY * cellH + 2 * margin;
+            bic.frame = minegraph.graph.rect(x, y, bic.width, bic.height, 5).attr({
+                fill: "rgba(255, 255, 255, .5)",
+                cursor: "move"
+            });
+
+            //draw axis y
+            bic.ylabels = minegraph.graph.set();
+            for( r = 0; r < gridY; r+=1) {
+                dx = x - 5;
+                dy = y + r * cellH + 7;
+                t = 'undefined';
+                if (typeof jsonBic.rows[r] != 'undefined' ) {
+                    t = jsonBic.rows[r].name;
+                }
+                txt = minegraph.graph.text(dx,dy,t).attr({
+                    'fill': minegraph.core.colors.white_80,
+                    'text-anchor': 'end',
+                    'stroke-opacity' : 0
+                });
+                bic.ylabels.push(txt);
+            }
+            //draw axis x
+            bic.xlabels = minegraph.graph.set();
+            for( c = 0; c < gridX; c+=1) {
+                dy = y + margin-10;
+                dx = x + margin + c * cellW + 7;
+                t = 'undefined';
+                if (typeof jsonBic.cols[c] != 'undefined' ) {
+                    t = jsonBic.cols[c].name;
+                }
+                txt = minegraph.graph.text(dx,dy,t).attr({
+                    'fill': minegraph.core.colors.white_80,
+                    'text-anchor': 'end',
+                    'stroke-opacity' : 0
+                });
+                txt.rotate(45,dx,dy);
+                bic.xlabels.push(txt);
+            }
+
+            bic.grid = minegraph.graph.set();
+            for( r = 0; r < gridY; r+=1) {
+                //loop cols
+                for( c = 0; c < gridX; c+=1) {
+                    dx = x + margin + c * cellW;
+                    dy = y + margin + r * cellH;
+                    var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
+                    if (docNum >= 20)
+                        minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';
+
+                    else if (docNum >=15 && docNum < 20)
+                        minegraph.core.colors.orange_2_80 = 'rgba(255, 69, 0, 0.8)';
+
+                    else if (docNum >=12 && docNum < 15)
+                        minegraph.core.colors.orange_2_80 = 'rgba(255, 127, 0, 0.8)';
+
+                    else if (docNum >=9 && docNum < 12)
+                        minegraph.core.colors.orange_2_80 = 'rgba(255, 140, 0, 0.8)';
+
+                    else if (docNum >=6 && docNum < 9)
+                        minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';
+
+                    else if (docNum >=3 && docNum < 6)
+                        minegraph.core.colors.orange_2_80 = 'rgba(255, 215, 0, 0.8)';
+
+                    else if (docNum >=0 && docNum < 3)
+                        minegraph.core.colors.orange_2_80 = 'rgba(255, 255, 0, 0.8)';
+
+                    rectangle.attr({
+                        fill: minegraph.core.colors.orange_2_80,
+                        'stroke-width' : 2,
+                        'stroke-opacity': 0,
+                        cursor: "move"
+                    });
+                    //add pop up description?
+                    bic.grid.push(rectangle);
+                //bic.push(rectangle);
+                }
+            }       
+
+            //group them into a set
+            bic.push(
+                bic.frame,
+                bic.ylabels,
+                bic.xlabels,
+                bic.grid
+                );
+
+            // push bic to doc list
+            minegraph.core.biclusters.push(bic);
+
+            // make sure bic isn't added ouside of graph.
+            minegraph.clipSet(bic);
+
+            //set events
+            minegraph.set_bic_context_menu(bic);
+            minegraph.setdrag(bic);
+            return bic;
+
+    });
+
     bic.source_data = jsonBic;
     bic.width = gridX * cellW + 2 * margin;
     bic.height = gridY * cellH + 2 * margin;
     bic.frame = minegraph.graph.rect(x, y, bic.width, bic.height, 5).attr({
-        fill: "rgba(255, 255, 255, .5)",
+        // fill: "rgba(255, 255, 255, .5)",
         cursor: "move"
     });
 
