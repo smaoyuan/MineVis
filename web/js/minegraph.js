@@ -345,7 +345,7 @@ minegraph.addBic = function(jsonBic, x, y) {
     bic.id = jsonBic['id'];
 
     //record how many documents related to this bicluster
-    docNum = 0;
+    docNum = 0;   
 
     // Request Parameters
     var request = new Object();
@@ -357,6 +357,7 @@ minegraph.addBic = function(jsonBic, x, y) {
     $.post("request.json",
         request,
         function(response) {
+
             docNum = response.length;  
             // console.log("the inside docNum is: " + docNum);
 
@@ -409,6 +410,15 @@ minegraph.addBic = function(jsonBic, x, y) {
                     dx = x + margin + c * cellW;
                     dy = y + margin + r * cellH;
                     var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
+
+                    // chaging color while mouse hover
+                    rectangle.hover(function(){
+                        this.color = this.color || this.attr("fill");
+                        this.stop().animate({fill: "#5555FF"}, 350); 
+                    }, function(){
+                        this.stop().animate({fill: this.color}, 350);  
+                    });
+
                     if (docNum >= 20)
                         minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';
 
@@ -434,8 +444,9 @@ minegraph.addBic = function(jsonBic, x, y) {
                         fill: minegraph.core.colors.orange_2_80,
                         'stroke-width' : 2,
                         'stroke-opacity': 0,
-                        cursor: "move"
+                        cursor: "pointer"
                     });
+
                     //add pop up description?
                     bic.grid.push(rectangle);
                 //bic.push(rectangle);
@@ -505,7 +516,6 @@ minegraph.addBic = function(jsonBic, x, y) {
         bic.xlabels.push(txt);
     }
 
-
     //loop rows
     bic.grid = minegraph.graph.set();
     for( r = 0; r < gridY; r+=1) {
@@ -514,12 +524,14 @@ minegraph.addBic = function(jsonBic, x, y) {
             dx = x + margin + c * cellW;
             dy = y + margin + r * cellH;
             var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
+
             rectangle.attr({
                 fill: minegraph.core.colors.orange_2_80,
                 'stroke-width' : 2,
                 'stroke-opacity': 0,
                 cursor: "move"
             });
+
             //add pop up description?
             bic.grid.push(rectangle);
         //bic.push(rectangle);
