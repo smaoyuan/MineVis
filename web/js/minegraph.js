@@ -342,10 +342,7 @@ minegraph.addBic = function(jsonBic, x, y) {
 
     //set the main properties
     bic.type = "bicluster";
-    bic.id = jsonBic['id'];
-
-    //record how many documents related to this bicluster
-    docNum = 0;   
+    bic.id = jsonBic['id'];  
 
     // Request Parameters
     var request = new Object();
@@ -353,25 +350,30 @@ minegraph.addBic = function(jsonBic, x, y) {
     request['ent_id'] = bic.id;
     request['type'] = 'show_bic_docs';
 
+    // store the content of each documents
+    var responseArray = new Array();
+
     // used to store the column and row names
     var textArray = new Array();
     textArray[0] = new Array();
     textArray[1] = new Array();
 
+    // store the number of documents in each cell
     var docNumArray = new Array();
     for (var i = 0; i < gridY; i++) {
         docNumArray[i] = new Array();
+        for (var j = 0; j < gridX; j++) {
+            docNumArray[i][j] = 0;
+        }
     }
 
     bic.source_data = jsonBic;
     bic.width = gridX * cellW + 2 * margin;
     bic.height = gridY * cellH + 2 * margin;
     bic.frame = minegraph.graph.rect(x, y, bic.width, bic.height, 5).attr({
-        // fill: "rgba(255, 255, 255, .5)",
+        fill: "rgba(255, 255, 255, .5)",
         cursor: "move"
     });
-
-    // bic.frame.hide();
 
     //draw axis y
     bic.ylabels = minegraph.graph.set();
@@ -387,8 +389,7 @@ minegraph.addBic = function(jsonBic, x, y) {
             'fill': minegraph.core.colors.white_80,
             'text-anchor': 'end',
             'stroke-opacity' : 0
-        });  
-        // txt.hide();     
+        });      
         bic.ylabels.push(txt);
     }
 
@@ -408,14 +409,60 @@ minegraph.addBic = function(jsonBic, x, y) {
             'stroke-opacity' : 0
         });
         txt.rotate(45,dx,dy);
-        // txt.hide();
         bic.xlabels.push(txt);
     }
 
+    // test the textArray
+    // console.log(bic.id);
     // for (var i = 0; i < gridX; i++) {
     //     console.log(textArray[0][i]);
+    // }
+    // for (var i = 0; i < gridY; i++) {
     //     console.log(textArray[1][i]);
     // }
+    // console.log("over");
+
+    $.ajaxSetup({async:false});
+
+   // request documents from the server
+    $.post("request.json",
+        request,
+        function(response) {          
+            // get content for each documents
+            for (var i = 0; i < response.length; i++) {
+                responseArray[i] = response[i];
+            }
+            // console.log("docNum inside is: " + docNum);
+    });
+
+    var num = 0;
+    var cNameExist;
+    var rNameExist;
+    var resText;
+
+    // generate a table contains doc number for each cell
+    for (var i = 0; i < textArray[0].length; i++) {
+        for (var j = 0; j < textArray[1].length; j++) {
+
+            docNumArray[j][i] = 0;
+
+            for (var k = 0; k < responseArray.length; k++) {
+                
+                // get file content
+                resText = responseArray[k]['text'];
+                cNameExist = parseInt(resText.indexOf(textArray[0][i]));
+                rNameExist = parseInt(resText.indexOf(textArray[1][j]));
+                
+                // both items are in the file
+                if (cNameExist > 0 && rNameExist > 0)
+                    num++;
+            }
+            
+            docNumArray[j][i] = num;
+            // console.log("docNumArray[" + j + "][" + i + "] = " + docNumArray[j][i]);
+            num = 0;                 
+        }
+    }
 
     // loop rows
     bic.grid = minegraph.graph.set();
@@ -426,155 +473,41 @@ minegraph.addBic = function(jsonBic, x, y) {
             dy = y + margin + r * cellH;
             var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
 
+            if (docNumArray[r][c] >= 10)
+                minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';
+
+            else if (docNumArray[r][c] >=7 && docNumArray[r][c] < 10)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 69, 0, 0.8)';
+
+            else if (docNumArray[r][c] >=5 && docNumArray[r][c] < 7)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 127, 0, 0.8)';
+
+            else if (docNumArray[r][c] >=3 && docNumArray[r][c] < 5)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 140, 0, 0.8)';
+
+            else if (docNumArray[r][c] >=1 && docNumArray[r][c] < 3)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 255, 0, 0.8)';
+                // minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';                    
+
+            // else if (docNumArray[c][r] >=1 && docNumArray[c][r] < 3)
+            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 215, 0, 0.8)';
+
+            else if (docNumArray[r][c] >=0 && docNumArray[c][r] < 1)
+                minegraph.core.colors.orange_2_80 = 'rgba(155, 205, 155, 0.8)';
+                // minegraph.core.colors.orange_2_80 = 'rgba(255, 255, 0, 0.8)';
+
             rectangle.attr({
-                // fill: minegraph.core.colors.orange_2_80,
+                fill: minegraph.core.colors.orange_2_80,
                 'stroke-width' : 2,
                 'stroke-opacity': 0,
-                cursor: "move"
+                cursor: "pointer"
             });
-            // rectangle.hide();
+
             //add pop up description?
             bic.grid.push(rectangle);
         //bic.push(rectangle);
         }
     }
-
-   // color biclusters based on the number of ducuments connected with
-    $.post("request.json",
-        request,
-        function(response) {
-
-            var cellDocNum;
-
-            console.log(textArray[0][1]);
-
-            var docString = response[0]['text'];
-
-            console.log(docString);
-
-            docNum = response.length;  
-            // console.log("the inside docNum is: " + docNum);
-
-            bic.source_data = jsonBic;
-            bic.width = gridX * cellW + 2 * margin;
-            bic.height = gridY * cellH + 2 * margin;
-            bic.frame = minegraph.graph.rect(x, y, bic.width, bic.height, 5).attr({
-                fill: "rgba(255, 255, 255, .5)",
-                cursor: "move"
-            });
-
-            //draw axis y
-            bic.ylabels = minegraph.graph.set();
-            for( r = 0; r < gridY; r+=1) {
-                dx = x - 5;
-                dy = y + r * cellH + 7;
-                t = 'undefined';
-                if (typeof jsonBic.rows[r] != 'undefined' ) {
-                    t = jsonBic.rows[r].name;
-
-                }
-                txt = minegraph.graph.text(dx,dy,t).attr({
-                    'fill': minegraph.core.colors.white_80,
-                    'text-anchor': 'end',
-                    'stroke-opacity' : 0
-                });
-                bic.ylabels.push(txt);
-            }
-            //draw axis x
-            bic.xlabels = minegraph.graph.set();
-            for( c = 0; c < gridX; c+=1) {
-                dy = y + margin-10;
-                dx = x + margin + c * cellW + 7;
-                t = 'undefined';
-                if (typeof jsonBic.cols[c] != 'undefined' ) {
-                    t = jsonBic.cols[c].name;
-
-                }
-                txt = minegraph.graph.text(dx,dy,t).attr({
-                    'fill': minegraph.core.colors.white_80,
-                    'text-anchor': 'end',
-                    'stroke-opacity' : 0
-                });
-                txt.rotate(45,dx,dy);
-                bic.xlabels.push(txt);
-            }
-
-            bic.grid = minegraph.graph.set();
-            for( r = 0; r < gridY; r+=1) {
-                //loop cols
-                for( c = 0; c < gridX; c+=1) {
-                    dx = x + margin + c * cellW;
-                    dy = y + margin + r * cellH;
-                    var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
-
-                    if (docNum >= 20)
-                        minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';
-
-                    else if (docNum >=15 && docNum < 20)
-                        minegraph.core.colors.orange_2_80 = 'rgba(255, 69, 0, 0.8)';
-
-                    else if (docNum >=12 && docNum < 15)
-                        minegraph.core.colors.orange_2_80 = 'rgba(255, 127, 0, 0.8)';
-
-                    else if (docNum >=9 && docNum < 12)
-                        minegraph.core.colors.orange_2_80 = 'rgba(255, 140, 0, 0.8)';
-
-                    else if (docNum >=6 && docNum < 9)
-                        minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';
-
-                    else if (docNum >=3 && docNum < 6)
-                        minegraph.core.colors.orange_2_80 = 'rgba(255, 215, 0, 0.8)';
-
-                    else if (docNum >=0 && docNum < 3)
-                        minegraph.core.colors.orange_2_80 = 'rgba(255, 255, 0, 0.8)';
-
-                    rectangle.attr({
-                        fill: minegraph.core.colors.orange_2_80,
-                        'stroke-width' : 2,
-                        'stroke-opacity': 0,
-                        cursor: "pointer"
-                    });
-
-                    //add pop up description?
-                    bic.grid.push(rectangle);
-                //bic.push(rectangle);
-                }
-            }  
-
-            // mouse move in: changing color
-            var over = function() {
-                this.color = this.color || this.attr("fill");
-                this.stop().animate({fill: "#5555FF"}, 350);       
-            }
-
-            // mouse move out: change back to original color
-            var out = function() {
-                this.stop().animate({fill: this.color}, 350);       
-            }
-
-            // adding mouse event
-            bic.grid.hover(over, out);
-
-            //group them into a set
-            bic.push(
-                bic.frame,
-                bic.ylabels,
-                bic.xlabels,
-                bic.grid
-                );
-
-            // push bic to doc list
-            // minegraph.core.biclusters.push(bic);
-
-            // make sure bic isn't added ouside of graph.
-            minegraph.clipSet(bic);
-
-            //set events
-            minegraph.set_bic_context_menu(bic);
-            minegraph.setdrag(bic);
-            return bic;
-    });
-
 
     // group them into a set
     bic.push(
@@ -583,6 +516,21 @@ minegraph.addBic = function(jsonBic, x, y) {
         bic.xlabels,
         bic.grid
         );
+
+
+    // mouse move in: changing color
+    var over = function() {
+        this.color = this.color || this.attr("fill");
+        this.stop().animate({fill: "#5555FF"}, 350);       
+    }
+
+    // mouse move out: change back to original color
+    var out = function() {
+        this.stop().animate({fill: this.color}, 350);       
+    }
+
+    // adding mouse event
+    bic.grid.hover(over, out);
 
     // push bic to doc list
     minegraph.core.biclusters.push(bic);
