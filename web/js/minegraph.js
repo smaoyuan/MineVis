@@ -518,8 +518,6 @@ minegraph.addBic = function(jsonBic, x, y) {
             if (c == 0 && r == 0)
                 startID = rectangle.id;
 
-            console.log(startID);
-
             //add pop up description?
             bic.grid.push(rectangle);
         //bic.push(rectangle);
@@ -559,13 +557,79 @@ minegraph.addBic = function(jsonBic, x, y) {
 
         if (this.attr("fill") != selectedColor) {
             colorArray[colorIndex] = this.attr("fill");       
-            this.animate({fill: selectedColor}, 300);                      
+            this.animate({fill: selectedColor}, 300); 
+
+            // calculate the index 
+            var cNameIndex = (this.id - startID) % gridX;
+            var rNameIndex = ((this.id - startID) - cNameIndex) / gridX;
+
+            var preText, curText;
+
+            for (var k = 0; k < responseArray.length; k++) {
+            
+                // get file content
+                resText = responseArray[k]['text'];
+                cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
+                rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
+                
+                // both items are in the file
+                if (cNameExist > 0 && rNameExist > 0 
+                    && minegraph.findDocument(responseArray[k].id) != null) {
+                    
+                    preText = resText;
+                    
+                    // replace the find string
+                    curText = resText.replace(textArray[0][cNameIndex], 
+                        "<h3>" + textArray[0][cNameIndex] + "</h3>");
+                    curText = curText.replace(textArray[1][rNameIndex], 
+                        "<h3>" + textArray[1][rNameIndex] + "</h3>");
+
+                    for (var i = 0; i < minegraph.core.documents.length; i++) {
+                        if (minegraph.core.documents[i].id == responseArray[k].id)
+                            minegraph.core.documents[i].content.attr({'fill': 'yellow'});
+                    }
+                }              
+
+            }
+
         }
         else {
             this.animate({fill: colorArray[colorIndex]}, 300);
+
+            // calculate the index 
+            var cNameIndex = (this.id - startID) % gridX;
+            var rNameIndex = ((this.id - startID) - cNameIndex) / gridX;
+
+            var preText, curText;
+
+            for (var k = 0; k < responseArray.length; k++) {
+            
+                // get file content
+                resText = responseArray[k]['text'];
+                cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
+                rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
+                
+                // both items are in the file
+                if (cNameExist > 0 && rNameExist > 0 
+                    && minegraph.findDocument(responseArray[k].id) != null) {
+                    
+                    preText = resText;
+                    
+                    // replace the find string
+                    curText = resText.replace(textArray[0][cNameIndex], 
+                        "<h3>" + textArray[0][cNameIndex] + "</h3>");
+                    curText = curText.replace(textArray[1][rNameIndex], 
+                        "<h3>" + textArray[1][rNameIndex] + "</h3>");
+
+                    for (var i = 0; i < minegraph.core.documents.length; i++) {
+                        if (minegraph.core.documents[i].id == responseArray[k].id)
+                            minegraph.core.documents[i].content.attr({'fill': 'white'});
+                    }
+                }  
+            }
         }
 
-    }); 
+    });    
 
     // push bic to doc list
     minegraph.core.biclusters.push(bic);
