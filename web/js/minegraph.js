@@ -485,28 +485,43 @@ minegraph.addBic = function(jsonBic, x, y) {
             dy = y + margin + r * cellH;
             var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
 
-            if (docNumArray[r][c] >= 10)
-                minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';
+            if (docNumArray[r][c] >= 6)
+                minegraph.core.colors.orange_2_80 = 'rgba(178, 71, 0, 0.8)';
 
-            else if (docNumArray[r][c] >=7 && docNumArray[r][c] < 10)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 69, 0, 0.8)';
+            if (docNumArray[r][c] >= 6 && docNumArray[r][c] < 6)
+                minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';            
 
-            else if (docNumArray[r][c] >=5 && docNumArray[r][c] < 7)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 127, 0, 0.8)';
+            if (docNumArray[r][c] >= 4 && docNumArray[r][c] < 5)
+                minegraph.core.colors.orange_2_80 = 'rgba(204, 81, 0, 0.8)';
 
-            else if (docNumArray[r][c] >=3 && docNumArray[r][c] < 5)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 140, 0, 0.8)';
+            else if (docNumArray[r][c] >= 3 && docNumArray[r][c] < 4)
+                minegraph.core.colors.orange_2_80 = 'rgba(230, 91, 0, 0.8)';            
 
-            else if (docNumArray[r][c] >=1 && docNumArray[r][c] < 3)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 255, 0, 0.8)';
-                // minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';                    
+            else if (docNumArray[r][c] >= 2 && docNumArray[r][c] < 3)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 101, 0, 0.8)';
 
-            // else if (docNumArray[c][r] >=1 && docNumArray[c][r] < 3)
-            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 215, 0, 0.8)';
+            // else if (docNumArray[r][c] >= 3 && docNumArray[r][c] < 4)
+            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 116, 25, 0.8)';                            
 
-            else if (docNumArray[r][c] >=0 && docNumArray[c][r] < 1)
-                minegraph.core.colors.orange_2_80 = 'rgba(155, 205, 155, 0.8)';
-                // minegraph.core.colors.orange_2_80 = 'rgba(255, 255, 0, 0.8)';
+            else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 132, 51, 0.8)';
+
+            // else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
+            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 147, 77, 0.8)';
+
+            else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 163, 102, 0.8)';
+
+            // else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
+            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 178, 128, 0.8)';
+            //     // minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';                    
+
+            // else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
+            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 193, 153, 0.8)';
+
+            // else if (docNumArray[r][c] >=0 && docNumArray[c][r] < 1)
+            //         minegraph.core.colors.orange_2_80 = 'rgba(255, 224, 204, 0.8)';
+                    // minegraph.core.colors.orange_2_80 = 'rgba(155, 205, 155, 0.8)';
 
             rectangle.attr({
                 fill: minegraph.core.colors.orange_2_80,
@@ -569,27 +584,71 @@ minegraph.addBic = function(jsonBic, x, y) {
             
                 // get file content
                 resText = responseArray[k]['text'];
+
+                // check wether the colum name and row name are in the documents
                 cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
                 rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
                 
-                // both items are in the file
+                // both items are in the file and the document is in the workspace
                 if (cNameExist > 0 && rNameExist > 0 
                     && minegraph.findDocument(responseArray[k].id) != null) {
                     
-                    preText = resText;
+                    // console.log(responseArray[k].id);
+
+                    // preText = resText;
                     
-                    // replace the find string
-                    curText = resText.replace(textArray[0][cNameIndex], 
-                        "<h3>" + textArray[0][cNameIndex] + "</h3>");
-                    curText = curText.replace(textArray[1][rNameIndex], 
-                        "<h3>" + textArray[1][rNameIndex] + "</h3>");
+                    // // replace the find string
+                    // curText = resText.replace(textArray[0][cNameIndex], 
+                    //     "<h3>" + textArray[0][cNameIndex] + "</h3>");
+                    // curText = curText.replace(textArray[1][rNameIndex], 
+                    //     "<h3>" + textArray[1][rNameIndex] + "</h3>");
 
                     for (var i = 0; i < minegraph.core.documents.length; i++) {
-                        if (minegraph.core.documents[i].id == responseArray[k].id)
-                            minegraph.core.documents[i].content.attr({'fill': 'yellow'});
+                        if (minegraph.core.documents[i].id == responseArray[k].id) {
+
+                            var curDoc = minegraph.core.documents[i];
+
+                            // var x = $(curDoc.title.node).position().left + 10;
+                            // var y = $(curDoc.title.node).position().top + 30;
+
+
+                            // curDoc.content.hide();
+
+                            // //split text per word
+                            // var words = curText.split(" ");
+                            // //line wrapped text
+                            // var tempText = "";
+
+                            // for (var i=0; i<words.length; i++) {
+                            //     curDoc.content.attr("text", tempText + " " + words[i]);
+                            //     if (curDoc.content.getBBox().width > 280) {
+                            //         //alert("Wrapping: " + words[i]);
+                            //         //it goes over the width, start new line
+                            //         tempText += "\n" + words[i];
+                            //         //compensate offset by moving down (since the vertical anchor is center)
+                            //         // there is no vertical alignment in version 2.0
+                            //         curDoc.content.translate(0,0);
+                            //     }
+                            //     else {
+                            //         //otherwise add it to current line
+                            //         tempText += " " + words[i];
+                            //     }
+                            // }
+                            // tempText += "\n";
+
+                            // console.log(tempText);
+
+                            // curDoc.content = minegraph.graph.text(x, y, tempText);
+                            // curDoc.push(curDoc.content);
+                            // curDoc.content.show();
+                            curDoc.content.attr({
+                                // 'text-anchor': 'start',
+                                'fill': 'yellow'
+                                // 'stroke-opacity' : 0
+                            });    
+                        }                       
                     }
                 }              
-
             }
 
         }
@@ -616,10 +675,10 @@ minegraph.addBic = function(jsonBic, x, y) {
                     preText = resText;
                     
                     // replace the find string
-                    curText = resText.replace(textArray[0][cNameIndex], 
-                        "<h3>" + textArray[0][cNameIndex] + "</h3>");
-                    curText = curText.replace(textArray[1][rNameIndex], 
-                        "<h3>" + textArray[1][rNameIndex] + "</h3>");
+                    curText = resText.replace("<h3>" + textArray[0][cNameIndex] + "</h3>", 
+                        textArray[0][cNameIndex]);
+                    curText = curText.replace("<h3>" + textArray[1][rNameIndex] + "</h3>", 
+                        textArray[1][rNameIndex]);
 
                     for (var i = 0; i < minegraph.core.documents.length; i++) {
                         if (minegraph.core.documents[i].id == responseArray[k].id)
