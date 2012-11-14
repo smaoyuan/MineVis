@@ -381,7 +381,7 @@ minegraph.addBic = function(jsonBic, x, y) {
     // index in the colorArray
     var colorIndex;
     // color used for the selected cells
-    var selectedColor = "rgba(131, 111, 255, 0.7)";    
+    var selectedColor = "rgba(255, 255, 0, 0.7)";   // "rgba(131, 111, 255, 0.7)" 
     // id of the 1st cell in each bicluster
     var startID;
 
@@ -565,6 +565,12 @@ minegraph.addBic = function(jsonBic, x, y) {
     // bic.grid.hover(over, out);
     
 
+    // an array to flag whether the document is highlight
+    var selectedDoc = new Array();
+    for (var i = 0; i < responseArray.length; i++) {
+        selectedDoc[i] = 0;
+    }
+
     bic.grid.mousedown(function(){
 
         // index for colors
@@ -607,6 +613,9 @@ minegraph.addBic = function(jsonBic, x, y) {
                         if (minegraph.core.documents[i].id == responseArray[k].id) {
 
                             var curDoc = minegraph.core.documents[i];
+
+                            // flag the displayed document has been selected
+                            selectedDoc[k]++;
 
                             // var x = $(curDoc.title.node).position().left + 10;
                             // var y = $(curDoc.title.node).position().top + 30;
@@ -681,8 +690,12 @@ minegraph.addBic = function(jsonBic, x, y) {
                         textArray[1][rNameIndex]);
 
                     for (var i = 0; i < minegraph.core.documents.length; i++) {
-                        if (minegraph.core.documents[i].id == responseArray[k].id)
-                            minegraph.core.documents[i].content.attr({'fill': 'white'});
+                        if (minegraph.core.documents[i].id == responseArray[k].id) {
+                            if (selectedDoc[k] == 1)
+                                minegraph.core.documents[i].content.attr({'fill': 'white'});
+                            selectedDoc[k]--;
+
+                        }
                     }
                 }  
             }
