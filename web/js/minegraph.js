@@ -469,6 +469,47 @@ minegraph.addBic = function(jsonBic, x, y) {
                 // both items are in the file
                 if (cNameExist > 0 && rNameExist > 0)
                     num++;
+
+                if (cNameExist > 0 && rNameExist < 0) {
+
+                    // find the full name of the state
+                    var tmpRow = stateName(textArray[1][j], stateAbb, state);
+
+                    if (tmpRow != 0) {
+                        rNameExist = parseInt(resText.indexOf(tmpRow));
+                        if (rNameExist > 0)
+                            num++;
+                    }
+                }
+
+                if (cNameExist < 0 && rNameExist > 0) {
+                    
+                    // find the full name of a state
+                    var tmpColumn = stateName(textArray[0][i], stateAbb, state);
+
+                    console.log("tmpColumn is: " + tmpColumn);
+
+                    if (tmpColumn != 0) {
+                        cNameExist = parseInt(resText.indexOf(tmpColumn));
+
+                        if (cNameExist > 0)
+                            num++;
+                    }
+                } 
+
+                if (cNameExist < 0 && rNameExist < 0) {
+
+                    var tmpColumn = stateName(textArray[0][i], stateAbb, state);
+                    var tmpRow = stateName(textArray[1][j], stateAbb, state);
+
+                    if (tmpColumn != 0 && tmpRow != 0) {
+                        cNameExist = parseInt(resText.indexOf(tmpColumn));
+                        rNameExist = parseInt(resText.indexOf(tmpRow));
+
+                        if (cNameExist > 0 && rNameExist > 0)
+                            num++;                        
+                    }  
+                }
             }
             
             docNumArray[j][i] = num;
@@ -509,11 +550,11 @@ minegraph.addBic = function(jsonBic, x, y) {
             // else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
             //     minegraph.core.colors.orange_2_80 = 'rgba(255, 147, 77, 0.8)';
 
-            else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 163, 102, 0.8)';
+            // else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
+            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 163, 102, 0.8)';
 
-            // else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
-            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 178, 128, 0.8)';
+            else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
+                minegraph.core.colors.orange_2_80 = 'rgba(255, 178, 128, 0.8)';
             //     // minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';                    
 
             // else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
@@ -594,72 +635,48 @@ minegraph.addBic = function(jsonBic, x, y) {
                 // check wether the colum name and row name are in the documents
                 cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
                 rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
-                
-                // both items are in the file and the document is in the workspace
+
+                var tmpColumn = stateName(textArray[0][cNameIndex], stateAbb, state);
+                var tmpRow = stateName(textArray[1][rNameIndex], stateAbb, state);
+
+                if (tmpColumn != 0)
+                    var tmpColumnExist = parseInt(resText.indexOf(tmpColumn));
+
+                if (tmpRow != 0)
+                    var tmpRowExist = parseInt(resText.indexOf(tmpRow));
+
+
+                var tmpDocName = "";
+
                 if (cNameExist > 0 && rNameExist > 0 
-                    && minegraph.findDocument(responseArray[k].id) != null) {
-                    
-                    // console.log(responseArray[k].id);
+                    || cNameExist < 0 && tmpColumnExist > 0 && rNameExist >0
+                    || cNameExist > 0 && rNameExist < 0 && tmpRowExist >0
+                    || cNameExist < 0 && rNameExist < 0 && tmpColumnExist > 0 && tmpRowExist > 0) {
 
-                    // preText = resText;
-                    
-                    // // replace the find string
-                    // curText = resText.replace(textArray[0][cNameIndex], 
-                    //     "<h3>" + textArray[0][cNameIndex] + "</h3>");
-                    // curText = curText.replace(textArray[1][rNameIndex], 
-                    //     "<h3>" + textArray[1][rNameIndex] + "</h3>");
+                    if (minegraph.findDocument(responseArray[k].id) != null) {    
 
-                    for (var i = 0; i < minegraph.core.documents.length; i++) {
-                        if (minegraph.core.documents[i].id == responseArray[k].id) {
+                        for (var i = 0; i < minegraph.core.documents.length; i++) {
+                            if (minegraph.core.documents[i].id == responseArray[k].id) {
 
-                            var curDoc = minegraph.core.documents[i];
+                                var curDoc = minegraph.core.documents[i];
 
-                            // flag the displayed document has been selected
-                            selectedDoc[k]++;
+                                // flag the displayed document has been selected
+                                selectedDoc[k]++;
 
-                            // var x = $(curDoc.title.node).position().left + 10;
-                            // var y = $(curDoc.title.node).position().top + 30;
-
-
-                            // curDoc.content.hide();
-
-                            // //split text per word
-                            // var words = curText.split(" ");
-                            // //line wrapped text
-                            // var tempText = "";
-
-                            // for (var i=0; i<words.length; i++) {
-                            //     curDoc.content.attr("text", tempText + " " + words[i]);
-                            //     if (curDoc.content.getBBox().width > 280) {
-                            //         //alert("Wrapping: " + words[i]);
-                            //         //it goes over the width, start new line
-                            //         tempText += "\n" + words[i];
-                            //         //compensate offset by moving down (since the vertical anchor is center)
-                            //         // there is no vertical alignment in version 2.0
-                            //         curDoc.content.translate(0,0);
-                            //     }
-                            //     else {
-                            //         //otherwise add it to current line
-                            //         tempText += " " + words[i];
-                            //     }
-                            // }
-                            // tempText += "\n";
-
-                            // console.log(tempText);
-
-                            // curDoc.content = minegraph.graph.text(x, y, tempText);
-                            // curDoc.push(curDoc.content);
-                            // curDoc.content.show();
-                            curDoc.content.attr({
-                                // 'text-anchor': 'start',
-                                'fill': 'yellow'
-                                // 'stroke-opacity' : 0
-                            });    
-                        }                       
+                                curDoc.content.attr({
+                                    'fill': 'yellow'
+                                });    
+                            }                       
+                        }
+                    }                     
+                    else {
+                        // flag the displayed document has been selected
+                        selectedDoc[k]++;                        
+                        tmpDocName += responseArray[k].id + " ";
+                        alert("Document " + tmpDocName + "is not in the workspace.");                        
                     }
-                }              
+                }             
             }
-
         }
         else {
             this.animate({fill: colorArray[colorIndex]}, 300);
@@ -676,9 +693,24 @@ minegraph.addBic = function(jsonBic, x, y) {
                 resText = responseArray[k]['text'];
                 cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
                 rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
-                
+
+
+                var tmpColumn = stateName(textArray[0][cNameIndex], stateAbb, state);
+                var tmpRow = stateName(textArray[1][rNameIndex], stateAbb, state);
+
+                if (tmpColumn != 0)
+                    var tmpColumnExist = parseInt(resText.indexOf(tmpColumn));
+
+                if (tmpRow != 0)
+                    var tmpRowExist = parseInt(resText.indexOf(tmpRow));
+
+
+
                 // both items are in the file
-                if (cNameExist > 0 && rNameExist > 0 
+                if ((cNameExist > 0 && rNameExist > 0
+                    || cNameExist < 0 && tmpColumnExist > 0 && rNameExist >0
+                    || cNameExist > 0 && rNameExist < 0 && tmpRowExist >0
+                    || cNameExist < 0 && rNameExist < 0 && tmpColumnExist > 0 && tmpRowExist > 0) 
                     && minegraph.findDocument(responseArray[k].id) != null) {
                     
                     preText = resText;
@@ -689,18 +721,18 @@ minegraph.addBic = function(jsonBic, x, y) {
                     curText = curText.replace("<h3>" + textArray[1][rNameIndex] + "</h3>", 
                         textArray[1][rNameIndex]);
 
+                    // console.log("here");
+
                     for (var i = 0; i < minegraph.core.documents.length; i++) {
                         if (minegraph.core.documents[i].id == responseArray[k].id) {
                             if (selectedDoc[k] == 1)
                                 minegraph.core.documents[i].content.attr({'fill': 'white'});
                             selectedDoc[k]--;
-
                         }
                     }
                 }  
             }
         }
-
     });    
 
     // push bic to doc list
@@ -1549,4 +1581,35 @@ minegraph.alert = function(message, title, timeout) {
     $('#minegraph-dialog').dialog('open');
     setTimeout("$('#minegraph-dialog').dialog('close');", timeout);
 
+}
+
+var stateAbb = ["AK", "AL", "AR", "AZ", "CA", 
+                "CO", "CT", "DE", "FL", "GA", 
+                "HI", "IA", "ID", "IL", "IN", 
+                "KS", "KY", "LA", "MA", "MD", 
+                "ME", "MI", "MN", "MO", "MS", 
+                "MT", "NC", "ND", "NE", "NH", 
+                "NJ", "NM", "NV", "NY", "OH", 
+                "OK", "OR", "PA", "RI", "SC", 
+                "SD", "TN", "TX", "UT", "VA", 
+                "VT", "WA", "WI", "WV", "WY"];
+
+var state = ["Alaska", "Alabama", "Arkansas", "Arizona", "California",
+            "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
+            "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana",
+            "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland",
+            "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi",
+            "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire",
+            "New Jersey", "New Mexico", "Nevada", "New York", "Ohio",
+            "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", 
+            "South Dakota", "Tennessee", "Texas", "Utah", "Virginia",
+            "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"];
+
+// find the abbreviation of a state name
+function stateName(string, stateAbb, state) {
+    for (var i = 0; i < state.length; i++) {
+        if (string == state[i])
+            return stateAbb[i];
+    }
+    return 0;
 }
