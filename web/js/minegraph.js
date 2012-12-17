@@ -471,7 +471,6 @@ minegraph.addBic = function(jsonBic, x, y) {
                     num++;
 
                 if (cNameExist > 0 && rNameExist < 0) {
-
                     // find the full name of the state
                     var tmpRow = stateName(textArray[1][j], stateAbb, state);
 
@@ -487,18 +486,15 @@ minegraph.addBic = function(jsonBic, x, y) {
                     // find the full name of a state
                     var tmpColumn = stateName(textArray[0][i], stateAbb, state);
 
-                    console.log("tmpColumn is: " + tmpColumn);
-
                     if (tmpColumn != 0) {
+                        // check whether the full name is in the document
                         cNameExist = parseInt(resText.indexOf(tmpColumn));
-
                         if (cNameExist > 0)
                             num++;
                     }
                 } 
 
                 if (cNameExist < 0 && rNameExist < 0) {
-
                     var tmpColumn = stateName(textArray[0][i], stateAbb, state);
                     var tmpRow = stateName(textArray[1][j], stateAbb, state);
 
@@ -527,42 +523,25 @@ minegraph.addBic = function(jsonBic, x, y) {
             var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
 
             if (docNumArray[r][c] >= 6)
-                minegraph.core.colors.orange_2_80 = 'rgba(178, 71, 0, 0.8)';
+                minegraph.core.colors.orange_2_80 = color_level7;
 
             if (docNumArray[r][c] >= 6 && docNumArray[r][c] < 6)
-                minegraph.core.colors.orange_2_80 = 'rgba(238, 0, 0, 0.8)';            
+                minegraph.core.colors.orange_2_80 = color_level6;            
 
             if (docNumArray[r][c] >= 4 && docNumArray[r][c] < 5)
-                minegraph.core.colors.orange_2_80 = 'rgba(204, 81, 0, 0.8)';
+                minegraph.core.colors.orange_2_80 = color_level5;
 
             else if (docNumArray[r][c] >= 3 && docNumArray[r][c] < 4)
-                minegraph.core.colors.orange_2_80 = 'rgba(230, 91, 0, 0.8)';            
+                minegraph.core.colors.orange_2_80 = color_level4;            
 
             else if (docNumArray[r][c] >= 2 && docNumArray[r][c] < 3)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 101, 0, 0.8)';
-
-            // else if (docNumArray[r][c] >= 3 && docNumArray[r][c] < 4)
-            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 116, 25, 0.8)';                            
+                minegraph.core.colors.orange_2_80 = color_level3;                          
 
             else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 132, 51, 0.8)';
-
-            // else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
-            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 147, 77, 0.8)';
-
-            // else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
-            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 163, 102, 0.8)';
+                minegraph.core.colors.orange_2_80 = color_level2;
 
             else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
-                minegraph.core.colors.orange_2_80 = 'rgba(255, 178, 128, 0.8)';
-            //     // minegraph.core.colors.orange_2_80 = 'rgba(255, 165, 0, 0.8)';                    
-
-            // else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
-            //     minegraph.core.colors.orange_2_80 = 'rgba(255, 193, 153, 0.8)';
-
-            // else if (docNumArray[r][c] >=0 && docNumArray[c][r] < 1)
-            //         minegraph.core.colors.orange_2_80 = 'rgba(255, 224, 204, 0.8)';
-                    // minegraph.core.colors.orange_2_80 = 'rgba(155, 205, 155, 0.8)';
+                minegraph.core.colors.orange_2_80 = color_level1;
 
             rectangle.attr({
                 fill: minegraph.core.colors.orange_2_80,
@@ -1583,6 +1562,21 @@ minegraph.alert = function(message, title, timeout) {
 
 }
 
+/*
+* color for coloring cells in a bicluster
+*/
+
+var color_level7 = 'rgba(178, 71, 0, 0.8)',
+    color_level6 = 'rgba(238, 0, 0, 0.8)',           
+    color_level5 = 'rgba(204, 81, 0, 0.8)',
+    color_level4 = 'rgba(230, 91, 0, 0.8)',       
+    color_level3 = 'rgba(255, 101, 0, 0.8)',
+    color_level2 = 'rgba(255, 132, 51, 0.8)',
+    color_level1 = 'rgba(255, 178, 128, 0.8)';
+
+/*
+* two array mapping the state name with its abbreviation
+*/
 var stateAbb = ["AK", "AL", "AR", "AZ", "CA", 
                 "CO", "CT", "DE", "FL", "GA", 
                 "HI", "IA", "ID", "IL", "IN", 
@@ -1592,9 +1586,9 @@ var stateAbb = ["AK", "AL", "AR", "AZ", "CA",
                 "NJ", "NM", "NV", "NY", "OH", 
                 "OK", "OR", "PA", "RI", "SC", 
                 "SD", "TN", "TX", "UT", "VA", 
-                "VT", "WA", "WI", "WV", "WY"];
+                "VT", "WA", "WI", "WV", "WY"],
 
-var state = ["Alaska", "Alabama", "Arkansas", "Arizona", "California",
+    state = ["Alaska", "Alabama", "Arkansas", "Arizona", "California",
             "Colorado", "Connecticut", "Delaware", "Florida", "Georgia",
             "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana",
             "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland",
