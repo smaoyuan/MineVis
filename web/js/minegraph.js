@@ -430,16 +430,6 @@ minegraph.addBic = function(jsonBic, x, y) {
         bic.xlabels.push(txt);
     }
 
-    // test the textArray
-    // console.log(bic.id);
-    // for (var i = 0; i < gridX; i++) {
-    //     console.log(textArray[0][i]);
-    // }
-    // for (var i = 0; i < gridY; i++) {
-    //     console.log(textArray[1][i]);
-    // }
-    // console.log("over");
-
     // cancel ajax
     $.ajaxSetup({async:false});
 
@@ -571,18 +561,18 @@ minegraph.addBic = function(jsonBic, x, y) {
     var mousedownflag = false;
 
     // mouse move in: changing color
-    // var over = function() {
-    //     this.color = this.color || this.attr("fill");
-    //     this.stop().animate({fill: "#5555FF"}, 350);              
-    // }
+    var over = function() {
+        this.color = this.color || this.attr("fill");
+        this.stop().animate({fill: "#5555FF"}, 350);              
+    }
 
-    // // mouse move out: change back to original color
-    // var out = function() {
-    //     this.stop().animate({fill: this.color}, 350);       
-    // }
+    // mouse move out: change back to original color
+    var out = function() {
+        this.stop().animate({fill: this.color}, 350);       
+    }
 
     // adding mouse event
-    // bic.grid.hover(over, out);
+    bic.grid.hover(over, out);
     
 
     // an array to flag whether the document is highlight
@@ -591,7 +581,10 @@ minegraph.addBic = function(jsonBic, x, y) {
         selectedDoc[i] = 0;
     }
 
-    bic.grid.mousedown(function(){
+    /*
+    * mouse down event for grid, coloring the grid and related documentss
+    */
+/*    bic.grid.mousedown(function(){
 
         // index for colors
         colorIndex = this.id - startID;
@@ -712,18 +705,22 @@ minegraph.addBic = function(jsonBic, x, y) {
                 }  
             }
         }
-    });    
+    }); 
+*/       
 
     // push bic to doc list
     minegraph.core.biclusters.push(bic);
 
     console.log(minegraph.core.biclusters);
 
-    // // make sure bic isn't added ouside of graph.
+    // make sure bic isn't added ouside of graph.
     minegraph.clipSet(bic);
 
-    // //set events
+    //set events
     minegraph.set_bic_context_menu(bic);
+
+    minegraph.set_grid_context_menu(bic);
+    
     minegraph.setdrag(bic);
     return bic;
 };
@@ -1421,41 +1418,91 @@ minegraph.set_bic_context_menu = function(set) {
             }
         });
     },1);
+
     /**
      * It's stupid but let's do it for the grid too...
      */
+    // set.grid.forEach( function(element) {
+    //     $(element.node).contextMenu({
+    //         menu: 'bicMenu'
+    //     },
+    //     function(action, el, pos) {
+    //         if (action == 'close') {
+    //             /**
+    //              * Close BiCluster Action
+    //              */
+    //             minegraph.removeBicluster(set);
+    //         } else if (action == 'link') {
+    //             /**
+    //              * Start linking process...
+    //              */
+    //             minegraph.linking(set);
+    //         } else if (action == 'docs') {
+    //             /**
+    //              * Show Documents for this bicluster
+    //              * Use event callback
+    //              */
+    //             for( var i = 0; i < minegraph.core.events.bic_show_docs.length; i++) {
+    //                 minegraph.core.events.bic_show_docs[i](set);
+    //             }
+    //         } else if (action == 'links') {
+    //             /**
+    //              * Show Biclusters linked to this bicluster
+    //              * Use event callback
+    //              */
+    //             for( i = 0; i < minegraph.core.events.bic_show_bics.length; i++) {
+    //                 minegraph.core.events.bic_show_bics[i](set);
+    //             }
+    //         } else  {
+    //             /**
+    //              * Unknown Action
+    //              */
+    //             console.debug("Bic Menu: action " + action);
+    //         }
+    //     });
+    // },1);
+};
+
+
+/**
+ * Adds the grid context menu to a set.
+ *
+ * @param set element set to add context menu to.
+ */
+minegraph.set_grid_context_menu = function(set) {
+    /**
+     * Do it for the set
+     */
     set.grid.forEach( function(element) {
         $(element.node).contextMenu({
-            menu: 'bicMenu'
+            menu: 'gridMenu'
         },
         function(action, el, pos) {
-            if (action == 'close') {
+            if (action == 'thinBicByRow') {
                 /**
-                 * Close BiCluster Action
-                 */
-                minegraph.removeBicluster(set);
-            } else if (action == 'link') {
+                * Show thin bicluster by row name
+                */
+
+                // total number of columns 
+                var cElementNum = set.xlabels.length;
+                // row position of the selected grid
+                var rPos = parseInt((element.id - set.grid[0].id) / cElementNum);
+                // column position of the selected grid
+                var cPos = (element.id - set.grid[0].id) % cElementNum;
+
+                var cName = $(set.xlabels[cPos].node).text();   // get column name
+                var rName = $(set.ylabels[rPos].node).text();   // get row name
+
+                // alert("Bic id is: " + set.id);
+
+                // alert("xlabels: " + cName + " , ylabels: " + rName);
+
+            } else if (action == 'thinBicByCol') {
                 /**
-                 * Start linking process...
+                 * Show thin bicluster by col name
                  */
-                minegraph.linking(set);
-            } else if (action == 'docs') {
-                /**
-                 * Show Documents for this bicluster
-                 * Use event callback
-                 */
-                for( var i = 0; i < minegraph.core.events.bic_show_docs.length; i++) {
-                    minegraph.core.events.bic_show_docs[i](set);
-                }
-            } else if (action == 'links') {
-                /**
-                 * Show Biclusters linked to this bicluster
-                 * Use event callback
-                 */
-                for( i = 0; i < minegraph.core.events.bic_show_bics.length; i++) {
-                    minegraph.core.events.bic_show_bics[i](set);
-                }
-            } else  {
+                alert("here");
+            } else {
                 /**
                  * Unknown Action
                  */
@@ -1463,7 +1510,9 @@ minegraph.set_bic_context_menu = function(set) {
             }
         });
     },1);
-};
+}
+
+
 
 
 /**
