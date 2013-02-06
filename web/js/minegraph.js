@@ -31,7 +31,9 @@ var minegraph = {
         events: {
             bic_show_docs: [],
             bic_show_bics: [],
-            doc_show_bics: []
+            doc_show_bics: [],
+
+            bic_show_thin_bics: []
         },
         link_object1: null
     }
@@ -342,16 +344,7 @@ minegraph.addBic = function(jsonBic, x, y) {
 
     //set the main properties
     bic.type = "bicluster";
-    bic.id = jsonBic['id'];  
-
-    // Request Parameters
-    var request = new Object();
-    request['vis_id'] = vis_id;
-    request['ent_id'] = bic.id;
-    request['type'] = 'show_bic_docs';
-
-    // store the content of each documents
-    var responseArray = new Array();
+    bic.id = jsonBic['id'];
 
     // used to store the column and row names
     var textArray = new Array();
@@ -429,6 +422,15 @@ minegraph.addBic = function(jsonBic, x, y) {
         txt.rotate(45,dx,dy);
         bic.xlabels.push(txt);
     }
+
+    // Request Parameters
+    var request = new Object();
+    request['vis_id'] = vis_id;
+    request['ent_id'] = bic.id;
+    request['type'] = 'show_bic_docs';
+
+    // store the content of each documents
+    var responseArray = new Array();   
 
     // cancel ajax
     $.ajaxSetup({async:false});
@@ -1478,30 +1480,34 @@ minegraph.set_grid_context_menu = function(set) {
             menu: 'gridMenu'
         },
         function(action, el, pos) {
+
+            // total number of columns 
+            var cElementNum = set.xlabels.length;
+            // row position of the selected grid
+            var rPos = parseInt((element.id - set.grid[0].id) / cElementNum);
+            // column position of the selected grid
+            var cPos = (element.id - set.grid[0].id) % cElementNum;
+
+            var cName = $(set.xlabels[cPos].node).text();   // get column name
+            var rName = $(set.ylabels[rPos].node).text();   // get row name
+
             if (action == 'thinBicByRow') {
                 /**
                 * Show thin bicluster by row name
                 */
 
-                // total number of columns 
-                var cElementNum = set.xlabels.length;
-                // row position of the selected grid
-                var rPos = parseInt((element.id - set.grid[0].id) / cElementNum);
-                // column position of the selected grid
-                var cPos = (element.id - set.grid[0].id) % cElementNum;
-
-                var cName = $(set.xlabels[cPos].node).text();   // get column name
-                var rName = $(set.ylabels[rPos].node).text();   // get row name
-
-                // alert("Bic id is: " + set.id);
-
-                // alert("xlabels: " + cName + " , ylabels: " + rName);
+                for( i = 0; i < minegraph.core.events.bic_show_thin_bics.length; i++) {
+                    minegraph.core.events.bic_show_thin_bics[i](set, rName, cName, 0);
+                }
 
             } else if (action == 'thinBicByCol') {
                 /**
                  * Show thin bicluster by col name
                  */
-                alert("here");
+                for( i = 0; i < minegraph.core.events.bic_show_thin_bics.length; i++) {
+                    minegraph.core.events.bic_show_thin_bics[i](set, rName, cName, 1);
+                }
+
             } else {
                 /**
                  * Unknown Action
