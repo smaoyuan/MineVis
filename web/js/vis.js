@@ -698,7 +698,9 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
         rows: [],
         cols: [],
         row_type: '',
-        col_type: ''
+        col_type: '',
+        // a flag to show how the thin bicluster is generated, 0 - by row, 1 - by col.
+        flag_row_or_col: 0,
     }
 
     var tmp = [];
@@ -772,7 +774,10 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                 // remove the repeat elements in this array
                 removeRepeat(tmp);
 
-                thinBic["id"] = '\"' + row_name + '\" by row';
+                thinBic["id"] = parseInt(bic.id) + ', \"' + row_name + '\" by row';
+                console.log("================================");
+                console.log(bic.id);
+                console.log("================================");                
                 console.log(thinBic["id"]);
 
                 thinBic["rows"] = new Array(1);
@@ -794,6 +799,8 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                     thinBic.grid[0][i] = 2;
                     // console.log("thinBic[\"gird\"][0][" + i + "] is: " + thinBic.grid[0][i]);
                 }
+
+                thinBic.flag_row_or_col = 0;
             }
 
             if (flag == 1) {
@@ -808,7 +815,7 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                 //     console.log(tmp[i]);
                 // }
 
-                thinBic["id"] = '\"' + col_name + '\" by col';
+                thinBic["id"] = parseInt(bic.id) + '\"' + col_name + '\" by col';
                 console.log(thinBic["id"]);
 
                 thinBic["cols"] = new Array(1);
@@ -830,7 +837,9 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                 for (var i = 0; i < tmp.length; i++) {
                     thinBic["grid"][i] = new Array(1);
                     thinBic["grid"][i][0] = 2;
-                }             
+                }
+
+                thinBic.flag_row_or_col = 1;             
             }
 
 
@@ -842,13 +851,13 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
             } else {
                 console.log("Bicluster " + thinBic.id + " is already in the graph");
             }
+
             // Link them if not already linked
-            if (minegraph.findLinks(bic, d).length == 0) {
+            if (minegraph.findLinks(bic, d).length == 0 && bic.id != d.id) {
                 minegraph.link(bic, d);
             } else {
                 console.log("Biclusters " + bic.id + " & " + thinBic.id + " are already linked");
             }
-
     });  
 }
 
