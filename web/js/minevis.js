@@ -283,14 +283,14 @@ function simpleBiClusterVis(clusterData, containerId) {
     //init canvas
     var preview_vis = new Raphael(document.getElementById(containerId), sizex, sizey);
 
-    // text array to store names of the column and row
+    //text array to store names of the column and row
     var crName = new Array();
-    // column names
+    //column names
     crName[0] = new Array();
-    // row names
+    //row names
     crName[1] = new Array();
 
-    // Element array to store retangles
+    //element array to store retangles
     var rectangle = new Array();
     for( r = 0; r < gridY; r+=1) {
         rectangle[r] = new Array();
@@ -365,7 +365,7 @@ function simpleBiClusterVis(clusterData, containerId) {
     }
 
     // return all box elements in the "preview_vis" canvas
-    var mineVisTable = preview_vis.setFinish();
+    mineVisTable = preview_vis.setFinish();
 
     // mouse move in: changing color
     var over = function() {
@@ -397,6 +397,8 @@ function simpleBiClusterVis(clusterData, containerId) {
             alert("there is no bicluster for this item");
         else if (this.color == '#FF6F00') {
             findCRIndex(this.id);
+            crName[1][rowIndex].animate({fill: "#5555FF"}, 350);   
+            // crName[0][columnIndex].stop().animate({fill: "#5555FF"}, 350);                        
             alert("Connection between: \"" + crName[1][rowIndex] + "\" and \"" + crName[0][columnIndex] + "\".\n MiniView is shown below.");         
         } else {
             findCRIndex(this.id);
