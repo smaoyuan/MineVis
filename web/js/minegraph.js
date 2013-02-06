@@ -435,121 +435,167 @@ minegraph.addBic = function(jsonBic, x, y) {
     // cancel ajax
     $.ajaxSetup({async:false});
 
-    // request documents from the server
-    $.post("request.json",
-        request,
-        function(response) {          
-            // get content for each documents
-            for (var i = 0; i < response.length; i++) {
-                responseArray[i] = response[i];
-            }
-    });
+    /*
+    * color cells for basic biclusters
+    */
+    if (jsonBic.type == "bicluster") {
 
-    // generate a table contains doc number for each cell
-    for (var i = 0; i < textArray[0].length; i++) {
-        for (var j = 0; j < textArray[1].length; j++) {
-
-            docNumArray[j][i] = 0;
-
-            for (var k = 0; k < responseArray.length; k++) {
-                
-                // get file content
-                resText = responseArray[k]['text'];
-                cNameExist = parseInt(resText.indexOf(textArray[0][i]));
-                rNameExist = parseInt(resText.indexOf(textArray[1][j]));
-                
-                // both items are in the file
-                if (cNameExist > 0 && rNameExist > 0)
-                    num++;
-
-                if (cNameExist > 0 && rNameExist < 0) {
-                    // find the full name of the state
-                    var tmpRow = stateName(textArray[1][j], stateAbb, state);
-
-                    if (tmpRow != 0) {
-                        rNameExist = parseInt(resText.indexOf(tmpRow));
-                        if (rNameExist > 0)
-                            num++;
-                    }
+       // request documents from the server
+        $.post("request.json",
+            request,
+            function(response) {          
+                // get content for each documents
+                for (var i = 0; i < response.length; i++) {
+                    responseArray[i] = response[i];
                 }
+        });
 
-                if (cNameExist < 0 && rNameExist > 0) {
+        // generate a table contains doc number for each cell
+        for (var i = 0; i < textArray[0].length; i++) {
+            for (var j = 0; j < textArray[1].length; j++) {
+
+                docNumArray[j][i] = 0;
+
+                for (var k = 0; k < responseArray.length; k++) {
                     
-                    // find the full name of a state
-                    var tmpColumn = stateName(textArray[0][i], stateAbb, state);
+                    // get file content
+                    resText = responseArray[k]['text'];
+                    cNameExist = parseInt(resText.indexOf(textArray[0][i]));
+                    rNameExist = parseInt(resText.indexOf(textArray[1][j]));
+                    
+                    // both items are in the file
+                    if (cNameExist > 0 && rNameExist > 0)
+                        num++;
 
-                    if (tmpColumn != 0) {
-                        // check whether the full name is in the document
-                        cNameExist = parseInt(resText.indexOf(tmpColumn));
-                        if (cNameExist > 0)
-                            num++;
+                    if (cNameExist > 0 && rNameExist < 0) {
+                        // find the full name of the state
+                        var tmpRow = stateName(textArray[1][j], stateAbb, state);
+
+                        if (tmpRow != 0) {
+                            rNameExist = parseInt(resText.indexOf(tmpRow));
+                            if (rNameExist > 0)
+                                num++;
+                        }
                     }
-                } 
 
-                if (cNameExist < 0 && rNameExist < 0) {
-                    var tmpColumn = stateName(textArray[0][i], stateAbb, state);
-                    var tmpRow = stateName(textArray[1][j], stateAbb, state);
+                    if (cNameExist < 0 && rNameExist > 0) {
+                        
+                        // find the full name of a state
+                        var tmpColumn = stateName(textArray[0][i], stateAbb, state);
 
-                    if (tmpColumn != 0 && tmpRow != 0) {
-                        cNameExist = parseInt(resText.indexOf(tmpColumn));
-                        rNameExist = parseInt(resText.indexOf(tmpRow));
+                        if (tmpColumn != 0) {
+                            // check whether the full name is in the document
+                            cNameExist = parseInt(resText.indexOf(tmpColumn));
+                            if (cNameExist > 0)
+                                num++;
+                        }
+                    } 
 
-                        if (cNameExist > 0 && rNameExist > 0)
-                            num++;                        
-                    }  
+                    if (cNameExist < 0 && rNameExist < 0) {
+                        var tmpColumn = stateName(textArray[0][i], stateAbb, state);
+                        var tmpRow = stateName(textArray[1][j], stateAbb, state);
+
+                        if (tmpColumn != 0 && tmpRow != 0) {
+                            cNameExist = parseInt(resText.indexOf(tmpColumn));
+                            rNameExist = parseInt(resText.indexOf(tmpRow));
+
+                            if (cNameExist > 0 && rNameExist > 0)
+                                num++;                        
+                        }  
+                    }
                 }
+                
+                docNumArray[j][i] = num;
+                num = 0;                 
             }
-            
-            docNumArray[j][i] = num;
-            num = 0;                 
+        }
+
+        // loop rows
+        bic.grid = minegraph.graph.set();
+        for( r = 0; r < gridY; r+=1) {
+            //loop cols
+            for( c = 0; c < gridX; c+=1) {
+                dx = x + margin + c * cellW;
+                dy = y + margin + r * cellH;
+                var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
+
+                if (docNumArray[r][c] >= 6)
+                    minegraph.core.colors.orange_2_80 = color_level7;
+
+                if (docNumArray[r][c] >= 6 && docNumArray[r][c] < 6)
+                    minegraph.core.colors.orange_2_80 = color_level6;            
+
+                if (docNumArray[r][c] >= 4 && docNumArray[r][c] < 5)
+                    minegraph.core.colors.orange_2_80 = color_level5;
+
+                else if (docNumArray[r][c] >= 3 && docNumArray[r][c] < 4)
+                    minegraph.core.colors.orange_2_80 = color_level4;            
+
+                else if (docNumArray[r][c] >= 2 && docNumArray[r][c] < 3)
+                    minegraph.core.colors.orange_2_80 = color_level3;                          
+
+                else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
+                    minegraph.core.colors.orange_2_80 = color_level2;
+
+                else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
+                    minegraph.core.colors.orange_2_80 = color_level1;
+
+                rectangle.attr({
+                    fill: minegraph.core.colors.orange_2_80,
+                    'stroke-width' : 2,
+                    'stroke-opacity': 0,
+                    cursor: "pointer"
+                });
+
+                if (c == 0 && r == 0)
+                    startID = rectangle.id;
+
+                //add pop up description?
+                bic.grid.push(rectangle);
+            //bic.push(rectangle);
+            }
         }
     }
 
-    // loop rows
-    bic.grid = minegraph.graph.set();
-    for( r = 0; r < gridY; r+=1) {
-        //loop cols
-        for( c = 0; c < gridX; c+=1) {
-            dx = x + margin + c * cellW;
-            dy = y + margin + r * cellH;
-            var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
+    /*
+    * color grid for thin biclusters
+    */
+    if (jsonBic.type == "thinBic") {
 
-            if (docNumArray[r][c] >= 6)
-                minegraph.core.colors.orange_2_80 = color_level7;
+       // loop rows
+        bic.grid = minegraph.graph.set();
+        for( r = 0; r < gridY; r+=1) {
+            //loop cols
+            for( c = 0; c < gridX; c+=1) {
+                dx = x + margin + c * cellW;
+                dy = y + margin + r * cellH;
+                var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
 
-            if (docNumArray[r][c] >= 6 && docNumArray[r][c] < 6)
-                minegraph.core.colors.orange_2_80 = color_level6;            
+                // thinBic is generated by row name
+                if(jsonBic.flag_row_or_col == 0)
+                    minegraph.core.colors.orange_2_80 = color_thinBic_by_row;
 
-            if (docNumArray[r][c] >= 4 && docNumArray[r][c] < 5)
-                minegraph.core.colors.orange_2_80 = color_level5;
+                // thinBic is generated by col name
+                if(jsonBic.flag_row_or_col == 1)
+                    minegraph.core.colors.orange_2_80 = color_thinBic_by_col;                    
 
-            else if (docNumArray[r][c] >= 3 && docNumArray[r][c] < 4)
-                minegraph.core.colors.orange_2_80 = color_level4;            
+                rectangle.attr({
+                    fill: minegraph.core.colors.orange_2_80,
+                    'stroke-width' : 2,
+                    'stroke-opacity': 0,
+                    cursor: "pointer"
+                });
 
-            else if (docNumArray[r][c] >= 2 && docNumArray[r][c] < 3)
-                minegraph.core.colors.orange_2_80 = color_level3;                          
+                if (c == 0 && r == 0)
+                    startID = rectangle.id;
 
-            else if (docNumArray[r][c] >= 1 && docNumArray[r][c] < 2)
-                minegraph.core.colors.orange_2_80 = color_level2;
-
-            else if (docNumArray[r][c] >= 0 && docNumArray[r][c] < 1)
-                minegraph.core.colors.orange_2_80 = color_level1;
-
-            rectangle.attr({
-                fill: minegraph.core.colors.orange_2_80,
-                'stroke-width' : 2,
-                'stroke-opacity': 0,
-                cursor: "pointer"
-            });
-
-            if (c == 0 && r == 0)
-                startID = rectangle.id;
-
-            //add pop up description?
-            bic.grid.push(rectangle);
-        //bic.push(rectangle);
+                //add pop up description?
+                bic.grid.push(rectangle);
+            //bic.push(rectangle);
+            }
         }
     }
+ 
 
     // group them into a set
     bic.push(
@@ -1628,6 +1674,8 @@ var color_level7 = 'rgba(178, 71, 0, 0.8)',
     color_level3 = 'rgba(255, 101, 0, 0.8)',
     color_level2 = 'rgba(255, 132, 51, 0.8)',
     color_level1 = 'rgba(255, 178, 128, 0.8)';
+    color_thinBic_by_row = 'rgba(255, 255, 51, 0.8)';
+    color_thinBic_by_col = 'rgba(0, 255, 0, 0.8)';
 
 /*
 * two array mapping the state name with its abbreviation
