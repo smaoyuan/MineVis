@@ -707,14 +707,37 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
     var tmpArray = [];
     var index = 0;
 
+    // cancel ajax
+    $.ajaxSetup({async:false});  
+
+    console.log("===============");
+    console.log("flag is: " + flag);
+    console.log("===============");
+
+    // adding all cols names 
+    if (flag == 0) {             
+        for (var i = 0; i < bic.xlabels.length; i++) {
+            tmp[index] = $(bic.xlabels[i].node).text();
+            index++;
+            console.log(tmp[i]);
+        }      
+    }
+
+    // adding all row names
+    if (flag == 1) {
+        for (var i = 0; i < bic.ylabels.length; i++) {
+            tmp[index] = $(bic.ylabels[i].node).text();
+            index++;
+            console.log(tmp[i]);
+        }
+    }
+
+
     // Request Parameters
     var request = new Object();
     request['vis_id'] = vis_id;
     request['ent_id'] = bic.id;
-    request['type'] = 'show_bic_links';
-
-    // cancel ajax
-    $.ajaxSetup({async:false});    
+    request['type'] = 'show_bic_links';  
 
     // Ajax me so stuff
     $.get("request.json",
@@ -771,14 +794,14 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                 // insert col_name into this array
                 tmp.splice(0, 0, col_name);
 
+                // for (var i = 0; i < tmp.length; i++) {
+                //     console.log(tmp[i] + "\n");
+                // }
+
                 // remove the repeat elements in this array
                 removeRepeat(tmp);
 
                 thinBic["id"] = parseInt(bic.id) + ', \"' + row_name + '\" by row';
-                console.log("================================");
-                console.log(bic.id);
-                console.log("================================");                
-                console.log(thinBic["id"]);
 
                 thinBic["rows"] = new Array(1);
                 thinBic["rows"][0] = [];
