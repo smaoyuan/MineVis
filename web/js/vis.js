@@ -708,11 +708,7 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
     var index = 0;
 
     // cancel ajax
-    $.ajaxSetup({async:false});  
-
-    console.log("===============");
-    console.log("flag is: " + flag);
-    console.log("===============");
+    $.ajaxSetup({async:false});
 
     // adding all cols names 
     if (flag == 0) {             
@@ -731,7 +727,6 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
             console.log(tmp[i]);
         }
     }
-
 
     // Request Parameters
     var request = new Object();
