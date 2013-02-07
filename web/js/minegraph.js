@@ -390,7 +390,7 @@ minegraph.addBic = function(jsonBic, x, y) {
     bic.ylabels = minegraph.graph.set();
     for( r = 0; r < gridY; r+=1) {
         dx = x - 5;
-        dy = y + r * cellH + 7;
+        dy = y + r * cellH + 12;
         t = 'undefined';
         if (typeof jsonBic.rows[r] != 'undefined' ) {
             t = jsonBic.rows[r].name;
@@ -548,8 +548,8 @@ minegraph.addBic = function(jsonBic, x, y) {
         for( r = 0; r < gridY; r+=1) {
             //loop cols
             for( c = 0; c < gridX; c+=1) {
-                dx = x + margin + c * cellW;
-                dy = y + margin + r * cellH;
+                dx = x + margin + c * cellW + 1;
+                dy = y + margin + r * cellH + 1;
                 var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
 
                 if (docNumArray[r][c] >= 6)
@@ -800,8 +800,18 @@ minegraph.addBic = function(jsonBic, x, y) {
     // make sure bic isn't added ouside of graph.
     minegraph.clipSet(bic);
 
+    console.log("=============");
+    console.log(bic.type);
+    console.log("======================");
+
     //set events
-    minegraph.set_bic_context_menu(bic);
+    if (jsonBic.type == "bicluster") {
+        minegraph.set_bic_context_menu(bic);        
+    }
+
+    if (jsonBic.type == "thinBic") {
+        minegraph.set_thinBic_context_menu(bic);
+    }
 
     minegraph.set_grid_context_menu(bic);
     
@@ -1546,6 +1556,44 @@ minegraph.set_bic_context_menu = function(set) {
     //     });
     // },1);
 };
+
+
+/**
+ * Adds the thin bicluster context menu to a set.
+ *
+ * @param set element set to add context menu to.
+ */
+minegraph.set_thinBic_context_menu = function(set) {
+
+    /**
+     * Do it for the set
+     */
+    set.forEach( function(element) {
+        $(element.node).contextMenu({
+            menu: 'thinBicMenu'
+        },
+        function(action, el, pos) {
+            if (action == 'close') {
+                /**
+                 * Close BiCluster Action
+                 */
+                minegraph.removeBicluster(set);
+            } else if (action == 'link') {
+                /**
+                 * Start linking process...
+                 */
+                minegraph.linking(set);
+            } else {
+                /**
+                 * Unknown Action
+                 */
+                console.debug("ThinBic Menu: action " + action);
+            }
+        });
+    },1);
+
+}
+
 
 
 /**
