@@ -110,7 +110,7 @@ if ($mining->getEntityFrequencyStatus() == 0) {
         <li><a href="#frequency">Frequency List</a></li>
         <li><a href="#browsebic">Browse Bics</a></li>
         <li><a href="#browsedoc">Browse Docs</a></li>
-        <li><a href="#browsechain">Browse Links</a></li>
+        <li><a href="#browsechain">Browse Links</a></li>      
     </ul>
     <div id="searcha">
         <h3>Simple Search:</h3>
@@ -171,8 +171,22 @@ if ($mining->getEntityFrequencyStatus() == 0) {
     <li class=""><a href="#link">Link to...</a></li>
     <li class=""><a href="#docs">Show Docs</a></li>
     <li class=""><a href="#links">Show Bic Links</a></li>
+<!--     <li class="highlight"><a href="#highlight">Highlight Bic</a><li> -->
     <li class=" separator"><a href="#close">Close</a></li>
 </ul>
+
+<!-- menu for thin bicluster -->
+<ul id="thinBicMenu" class="contextMenu">
+    <li class=""><a href="#link">Link to...</a></li>
+    <li class=" separator"><a href="#close">Close</a></li>
+</ul>
+
+<!-- menu for grid in each bicluster -->
+<ul id="gridMenu" class="contextMenu">
+    <li class=""><a href="#thinBicByRow">Thin Bic by Row</a></li>
+    <li class=""><a href="#thinBicByCol">Thin Bic by Col</a></li>    
+</ul>
+
 <ul id="docMenu" class="contextMenu">
     <li class=""><a href="#link">Link to..</a></li>
     <li class=""><a href="#bics">Show Bics</a></li>
