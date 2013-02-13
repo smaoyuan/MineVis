@@ -177,7 +177,7 @@ if ($mining->getEntityFrequencyStatus() == 0) {
 
 <!-- menu for thin bicluster -->
 <ul id="thinBicMenu" class="contextMenu">
-    <li class=""><a href="#link">Link to...</a></li>
+    <li class=""><a href="#link">Link to...</a></li>    
     <li class=" separator"><a href="#close">Close</a></li>
 </ul>
 
@@ -185,6 +185,11 @@ if ($mining->getEntityFrequencyStatus() == 0) {
 <ul id="gridMenu" class="contextMenu">
     <li class=""><a href="#thinBicByRow">Thin Bic by Row</a></li>
     <li class=""><a href="#thinBicByCol">Thin Bic by Col</a></li>    
+</ul>
+
+<!-- menu for grid in each thin bicluster -->
+<ul id="thinBicGridMenu" class="contextMenu">
+    <li class=""><a href="#showEntity">Show Entity</a></li>   
 </ul>
 
 <ul id="docMenu" class="contextMenu">
