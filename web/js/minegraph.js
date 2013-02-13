@@ -33,7 +33,8 @@ var minegraph = {
             bic_show_bics: [],
             doc_show_bics: [],
 
-            bic_show_thin_bics: []
+            bic_show_thin_bics: [],
+            thinBic_show_entity: []
         },
         link_object1: null
     }
@@ -446,6 +447,10 @@ minegraph.addBic = function(jsonBic, x, y) {
         }
     }
 
+    if (jsonBic.type == "metaBic") {
+        t = "metaBic";
+    }
+
     txt = minegraph.graph.text(dx,dy,t).attr({
         'fill': minegraph.core.colors.white_80,
         'text-anchor': 'end',
@@ -626,6 +631,36 @@ minegraph.addBic = function(jsonBic, x, y) {
             }
         }
     }
+
+    if (jsonBic.type == "metaBic") {
+
+       // loop rows
+        bic.grid = minegraph.graph.set();
+        for( r = 0; r < gridY; r+=1) {
+            //loop cols
+            for( c = 0; c < gridX; c+=1) {
+                dx = x + margin + c * cellW;
+                dy = y + margin + r * cellH;
+                var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
+
+                minegraph.core.colors.orange_2_80 = color_metaBic;                  
+
+                rectangle.attr({
+                    fill: minegraph.core.colors.orange_2_80,
+                    'stroke-width' : 2,
+                    'stroke-opacity': 0,
+                    cursor: "pointer"
+                });
+
+                if (c == 0 && r == 0)
+                    startID = rectangle.id;
+
+                //add pop up description?
+                bic.grid.push(rectangle);
+            //bic.push(rectangle);
+            }
+        }
+    }
  
 
     // group them into a set
@@ -644,7 +679,7 @@ minegraph.addBic = function(jsonBic, x, y) {
 
     
     // adding hover event for common bicluster
-    if (jsonBic.type == "bicluster") {
+    if (jsonBic.type == "bicluster" || jsonBic.type == "thinBic" ) {
         // mouse move in: changing color
         var over = function() {
             this.color = this.color || this.attr("fill");
@@ -670,131 +705,129 @@ minegraph.addBic = function(jsonBic, x, y) {
     * mouse down event for grid, coloring the grid and related documentss
     */
 
-    if (jsonBic.type == "thinBic") {
-        bic.grid.mousedown(function(){
+    // if (jsonBic.type == "thinBic") {
+    //     bic.grid.mousedown(function(){
+    //         // index for colors
+    //         colorIndex = this.id - startID;
 
-            // index for colors
-            colorIndex = this.id - startID;
+    //         if (this.attr("fill") != color_grid_selected) {
+    //             colorArray[colorIndex] = this.attr("fill");       
+    //             this.animate({fill: color_grid_selected}, 300); 
 
-            if (this.attr("fill") != color_grid_selected) {
-                colorArray[colorIndex] = this.attr("fill");       
-                this.animate({fill: color_grid_selected}, 300); 
+    //             // // calculate the index 
+    //             // var cNameIndex = (this.id - startID) % gridX;
+    //             // var rNameIndex = ((this.id - startID) - cNameIndex) / gridX;
 
-                // // calculate the index 
-                // var cNameIndex = (this.id - startID) % gridX;
-                // var rNameIndex = ((this.id - startID) - cNameIndex) / gridX;
+    //             // var preText, curText;
 
-                // var preText, curText;
-
-                // for (var k = 0; k < responseArray.length; k++) {
+    //             // for (var k = 0; k < responseArray.length; k++) {
                 
-                //     // get file content
-                //     resText = responseArray[k]['text'];
+    //             //     // get file content
+    //             //     resText = responseArray[k]['text'];
 
-                //     // check wether the colum name and row name are in the documents
-                //     cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
-                //     rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
+    //             //     // check wether the colum name and row name are in the documents
+    //             //     cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
+    //             //     rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
 
-                //     var tmpColumn = stateName(textArray[0][cNameIndex], stateAbb, state);
-                //     var tmpRow = stateName(textArray[1][rNameIndex], stateAbb, state);
+    //             //     var tmpColumn = stateName(textArray[0][cNameIndex], stateAbb, state);
+    //             //     var tmpRow = stateName(textArray[1][rNameIndex], stateAbb, state);
 
-                //     if (tmpColumn != 0)
-                //         var tmpColumnExist = parseInt(resText.indexOf(tmpColumn));
+    //             //     if (tmpColumn != 0)
+    //             //         var tmpColumnExist = parseInt(resText.indexOf(tmpColumn));
 
-                //     if (tmpRow != 0)
-                //         var tmpRowExist = parseInt(resText.indexOf(tmpRow));
+    //             //     if (tmpRow != 0)
+    //             //         var tmpRowExist = parseInt(resText.indexOf(tmpRow));
 
 
-                //     var tmpDocName = "";
+    //             //     var tmpDocName = "";
 
-                //     if (cNameExist > 0 && rNameExist > 0 
-                //         || cNameExist < 0 && tmpColumnExist > 0 && rNameExist >0
-                //         || cNameExist > 0 && rNameExist < 0 && tmpRowExist >0
-                //         || cNameExist < 0 && rNameExist < 0 && tmpColumnExist > 0 && tmpRowExist > 0) {
+    //             //     if (cNameExist > 0 && rNameExist > 0 
+    //             //         || cNameExist < 0 && tmpColumnExist > 0 && rNameExist >0
+    //             //         || cNameExist > 0 && rNameExist < 0 && tmpRowExist >0
+    //             //         || cNameExist < 0 && rNameExist < 0 && tmpColumnExist > 0 && tmpRowExist > 0) {
 
-                //         if (minegraph.findDocument(responseArray[k].id) != null) {    
+    //             //         if (minegraph.findDocument(responseArray[k].id) != null) {    
 
-                //             for (var i = 0; i < minegraph.core.documents.length; i++) {
-                //                 if (minegraph.core.documents[i].id == responseArray[k].id) {
+    //             //             for (var i = 0; i < minegraph.core.documents.length; i++) {
+    //             //                 if (minegraph.core.documents[i].id == responseArray[k].id) {
 
-                //                     var curDoc = minegraph.core.documents[i];
+    //             //                     var curDoc = minegraph.core.documents[i];
 
-                //                     // flag the displayed document has been selected
-                //                     selectedDoc[k]++;
+    //             //                     // flag the displayed document has been selected
+    //             //                     selectedDoc[k]++;
 
-                //                     curDoc.content.attr({
-                //                         'fill': 'yellow'
-                //                     });    
-                //                 }                       
-                //             }
-                //         }                     
-                //         else {
-                //             // flag the displayed document has been selected
-                //             selectedDoc[k]++;                        
-                //             tmpDocName += responseArray[k].id + " ";
-                //             alert("Document " + tmpDocName + "is not in the workspace.");                        
-                //         }
-                //     }             
-                // }
-            }
-            else {
-                this.animate({fill: colorArray[colorIndex]}, 300);
+    //             //                     curDoc.content.attr({
+    //             //                         'fill': 'yellow'
+    //             //                     });    
+    //             //                 }                       
+    //             //             }
+    //             //         }                     
+    //             //         else {
+    //             //             // flag the displayed document has been selected
+    //             //             selectedDoc[k]++;                        
+    //             //             tmpDocName += responseArray[k].id + " ";
+    //             //             alert("Document " + tmpDocName + "is not in the workspace.");                        
+    //             //         }
+    //             //     }             
+    //             // }
+    //         }
+    //         else {
+    //             this.animate({fill: colorArray[colorIndex]}, 300);
 
-                // // calculate the index 
-                // var cNameIndex = (this.id - startID) % gridX;
-                // var rNameIndex = ((this.id - startID) - cNameIndex) / gridX;
+    //             // // calculate the index 
+    //             // var cNameIndex = (this.id - startID) % gridX;
+    //             // var rNameIndex = ((this.id - startID) - cNameIndex) / gridX;
 
-                // var preText, curText;
+    //             // var preText, curText;
 
-                // for (var k = 0; k < responseArray.length; k++) {
+    //             // for (var k = 0; k < responseArray.length; k++) {
                 
-                //     // get file content
-                //     resText = responseArray[k]['text'];
-                //     cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
-                //     rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
+    //             //     // get file content
+    //             //     resText = responseArray[k]['text'];
+    //             //     cNameExist = parseInt(resText.indexOf(textArray[0][cNameIndex]));
+    //             //     rNameExist = parseInt(resText.indexOf(textArray[1][rNameIndex]));
 
 
-                //     var tmpColumn = stateName(textArray[0][cNameIndex], stateAbb, state);
-                //     var tmpRow = stateName(textArray[1][rNameIndex], stateAbb, state);
+    //             //     var tmpColumn = stateName(textArray[0][cNameIndex], stateAbb, state);
+    //             //     var tmpRow = stateName(textArray[1][rNameIndex], stateAbb, state);
 
-                //     if (tmpColumn != 0)
-                //         var tmpColumnExist = parseInt(resText.indexOf(tmpColumn));
+    //             //     if (tmpColumn != 0)
+    //             //         var tmpColumnExist = parseInt(resText.indexOf(tmpColumn));
 
-                //     if (tmpRow != 0)
-                //         var tmpRowExist = parseInt(resText.indexOf(tmpRow));
+    //             //     if (tmpRow != 0)
+    //             //         var tmpRowExist = parseInt(resText.indexOf(tmpRow));
 
 
 
-                //     // both items are in the file
-                //     if ((cNameExist > 0 && rNameExist > 0
-                //         || cNameExist < 0 && tmpColumnExist > 0 && rNameExist >0
-                //         || cNameExist > 0 && rNameExist < 0 && tmpRowExist >0
-                //         || cNameExist < 0 && rNameExist < 0 && tmpColumnExist > 0 && tmpRowExist > 0) 
-                //         && minegraph.findDocument(responseArray[k].id) != null) {
+    //             //     // both items are in the file
+    //             //     if ((cNameExist > 0 && rNameExist > 0
+    //             //         || cNameExist < 0 && tmpColumnExist > 0 && rNameExist >0
+    //             //         || cNameExist > 0 && rNameExist < 0 && tmpRowExist >0
+    //             //         || cNameExist < 0 && rNameExist < 0 && tmpColumnExist > 0 && tmpRowExist > 0) 
+    //             //         && minegraph.findDocument(responseArray[k].id) != null) {
                         
-                //         preText = resText;
+    //             //         preText = resText;
                         
-                //         // replace the find string
-                //         curText = resText.replace("<h3>" + textArray[0][cNameIndex] + "</h3>", 
-                //             textArray[0][cNameIndex]);
-                //         curText = curText.replace("<h3>" + textArray[1][rNameIndex] + "</h3>", 
-                //             textArray[1][rNameIndex]);
+    //             //         // replace the find string
+    //             //         curText = resText.replace("<h3>" + textArray[0][cNameIndex] + "</h3>", 
+    //             //             textArray[0][cNameIndex]);
+    //             //         curText = curText.replace("<h3>" + textArray[1][rNameIndex] + "</h3>", 
+    //             //             textArray[1][rNameIndex]);
 
-                //         // console.log("here");
+    //             //         // console.log("here");
 
-                //         for (var i = 0; i < minegraph.core.documents.length; i++) {
-                //             if (minegraph.core.documents[i].id == responseArray[k].id) {
-                //                 if (selectedDoc[k] == 1)
-                //                     minegraph.core.documents[i].content.attr({'fill': 'white'});
-                //                 selectedDoc[k]--;
-                //             }
-                //         }
-                //     }  
-                // }
-            }
-        }); 
- 
-    }      
+    //             //         for (var i = 0; i < minegraph.core.documents.length; i++) {
+    //             //             if (minegraph.core.documents[i].id == responseArray[k].id) {
+    //             //                 if (selectedDoc[k] == 1)
+    //             //                     minegraph.core.documents[i].content.attr({'fill': 'white'});
+    //             //                 selectedDoc[k]--;
+    //             //             }
+    //             //         }
+    //             //     }  
+    //             // }
+    //         }
+    //     }); 
+    // }      
 
     // push bic to doc list
     minegraph.core.biclusters.push(bic);
@@ -812,6 +845,11 @@ minegraph.addBic = function(jsonBic, x, y) {
 
     if (jsonBic.type == "thinBic") {
         minegraph.set_thinBic_context_menu(bic);
+        minegraph.set_thinBic_grid_context_menu(bic);        
+    }
+
+    if (jsonBic.type == "metaBic") {
+        minegraph.set_thinBic_context_menu(bic);        
     }
     
     minegraph.setdrag(bic);
@@ -1594,7 +1632,6 @@ minegraph.set_thinBic_context_menu = function(set) {
 }
 
 
-
 /**
  * Adds the grid context menu to a set.
  *
@@ -1645,6 +1682,54 @@ minegraph.set_grid_context_menu = function(set) {
             }
         });
     },1);
+}
+
+
+
+minegraph.set_thinBic_grid_context_menu = function(set) {
+    /**
+     * Do it for the set
+     */
+    set.grid.forEach( function(element) {
+        $(element.node).contextMenu({
+            menu: 'thinBicGridMenu'
+        },
+        function(action, el, pos) {
+
+            // total number of columns 
+            var cElementNum = set.xlabels.length;
+            // row position of the selected grid
+            var rPos = parseInt((element.id - set.grid[0].id) / cElementNum);
+            // column position of the selected grid
+            var cPos = (element.id - set.grid[0].id) % cElementNum;
+
+            var cName = $(set.xlabels[cPos].node).text();   // get column name
+            var rName = $(set.ylabels[rPos].node).text();   // get row name 
+
+            if (action == 'showEntity') {
+                /**
+                * Show thin bicluster by row name
+                */
+
+                // console.log("================");
+
+                // console.log("cName is: " + cName + "\n");
+                // console.log("rName is: " + rName);
+
+
+                for( i = 0; i < minegraph.core.events.thinBic_show_entity.length; i++) {
+                    minegraph.core.events.thinBic_show_entity[i](set, rName, cName);
+                }
+
+            } else {
+                /**
+                 * Unknown Action
+                 */
+                console.debug("Bic Menu: action " + action);
+            }
+
+        });
+    },1);            
 }
 
 
@@ -1759,6 +1844,7 @@ var color_level7 = 'rgba(178, 71, 0, 0.8)',
     color_level1 = 'rgba(255, 178, 128, 0.8)';
     color_thinBic_by_row = 'rgba(255, 255, 51, 0.8)',
     color_thinBic_by_col = 'rgba(0, 255, 0, 0.8)',
+    color_metaBic = 'rgba(102, 102, 255, 0.8)',
     // color used for the selected cells
     color_grid_selected = "rgba(156, 89, 66, 0.8)";   // "rgba(131, 111, 255, 0.7)"     
 
