@@ -346,6 +346,7 @@ function init_Graph_Events() {
     minegraph.event('doc_show_bics', graph_show_document_biclusters);
 
     minegraph.event('bic_show_thin_bics', graph_show_thin_biclusters);
+    minegraph.event('thinBic_show_entity', graph_show_thinBic_entity);    
 }
 
 
@@ -878,6 +879,63 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
             }
     });  
 }
+
+
+function graph_show_thinBic_entity (bic, row_name, col_name) {
+    var bb = bic.getBBox();
+    var x = bb.x + bb.width + 100;
+    var y = 50;
+    var d;
+    console.log('thinBic_show_entity');
+
+    var metaBic = {
+        type: 'metaBic',
+        id: '',
+        grid: [],
+        rows: [],
+        cols: [],
+        row_type: '',
+        col_type: '',
+    }
+
+    metaBic.id = row_name + "+" + col_name;
+    console.log(metaBic.id);
+
+    metaBic["rows"] = new Array(1);
+    metaBic["rows"][0] = [];
+    metaBic["rows"][0]["name"] = row_name;
+    metaBic["rows"][0]["row"] = "";
+
+    metaBic["cols"] = new Array(1);
+    metaBic["cols"][0] = [];
+    metaBic["cols"][0]["name"] = col_name;
+    metaBic["cols"][0]["col"] = "";
+
+    metaBic["grid"] = new Array(1);
+    metaBic.grid[0] = [];
+    metaBic.grid[0][0] = 2;
+
+    console.log(metaBic.grid[0][0]);
+
+    // Find or add BiCluster
+    d = minegraph.findBiCluster(metaBic.id);
+    if (d == null) {
+        d = minegraph.addBic(metaBic, x, y);
+        y += d.height + 30;
+    } else {
+        console.log("Bicluster " + metaBic.id + " is already in the graph");
+    }  
+
+    // Link them if not already linked
+    if (minegraph.findLinks(bic, d).length == 0 && bic.id != d.id) {
+        minegraph.link(bic, d);
+    } else {
+        console.log("Biclusters " + bic.id + " & " + metaBic.id + " are already linked");
+    }      
+
+}
+
+
 
 /*
 * remove the repeat elements in an array
