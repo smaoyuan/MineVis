@@ -34,7 +34,7 @@ var minegraph = {
             doc_show_bics: [],
 
             bic_show_thin_bics: [],
-            thinBic_show_entity: []
+            thinBic_show_metaBic: []
         },
         link_object1: null
     }
@@ -332,7 +332,14 @@ minegraph.addDocument = function(jsonDoc , x, y) {
  * @return bic cluster set
  */
 minegraph.addBic = function(jsonBic, x, y) {
-    console.log('new BiCluster (' + jsonBic['id'] + ')');
+    if (jsonBic.type == "bicluster") {
+        console.log('new BiCluster (' + jsonBic['id'] + ')');       
+    } else if (jsonBic.type == "thinBic") {
+        console.log('new thinBic (' + jsonBic['id'] + ')');
+    } else if (jsonBic.type == "metaBic") {
+        console.log('new metBic (' + jsonBic['id'] + ')');
+    }
+
     var bic = minegraph.graph.set();
     var margin = 5;
     var gridX = jsonBic.grid[0].length;
@@ -345,6 +352,7 @@ minegraph.addBic = function(jsonBic, x, y) {
 
     //set the main properties
     bic.type = "bicluster";
+    // bic.type = jsonBic.type;
     bic.id = jsonBic['id'];
 
     // used to store the column and row names
@@ -910,6 +918,10 @@ minegraph.removeDocument = function(document) {
     for (i=0;i<links_to_remove.length;i++) {
         minegraph.removeLink(links_to_remove[i]);
     }
+
+    // log this interaction
+    console.log("Document " + document.id + " has been removed");
+    
     return document;
 };
 
@@ -932,6 +944,9 @@ minegraph.removeBicluster = function(bicluster) {
     for (i=0;i<links_to_remove.length;i++) {
         minegraph.removeLink(links_to_remove[i]);
     }
+
+    console.log(bicluster.id + " has been removed.");
+
     return document;
 };
 
@@ -1663,7 +1678,7 @@ minegraph.set_grid_context_menu = function(set) {
                 */
 
                 for( i = 0; i < minegraph.core.events.bic_show_thin_bics.length; i++) {
-                    minegraph.core.events.bic_show_thin_bics[i](set, rName, cName, 0);
+                    minegraph.core.events.bic_show_thin_bics[i](set, rName, cName, rPos, cPos, 0);
                 }
 
             } else if (action == 'thinBicByCol') {
@@ -1671,7 +1686,7 @@ minegraph.set_grid_context_menu = function(set) {
                  * Show thin bicluster by col name
                  */
                 for( i = 0; i < minegraph.core.events.bic_show_thin_bics.length; i++) {
-                    minegraph.core.events.bic_show_thin_bics[i](set, rName, cName, 1);
+                    minegraph.core.events.bic_show_thin_bics[i](set, rName, cName, rPos, cPos, 1);
                 }
 
             } else {
@@ -1706,19 +1721,13 @@ minegraph.set_thinBic_grid_context_menu = function(set) {
             var cName = $(set.xlabels[cPos].node).text();   // get column name
             var rName = $(set.ylabels[rPos].node).text();   // get row name 
 
-            if (action == 'showEntity') {
+            if (action == 'showMetaBic') {
                 /**
                 * Show thin bicluster by row name
                 */
 
-                // console.log("================");
-
-                // console.log("cName is: " + cName + "\n");
-                // console.log("rName is: " + rName);
-
-
-                for( i = 0; i < minegraph.core.events.thinBic_show_entity.length; i++) {
-                    minegraph.core.events.thinBic_show_entity[i](set, rName, cName);
+                for( i = 0; i < minegraph.core.events.thinBic_show_metaBic.length; i++) {
+                    minegraph.core.events.thinBic_show_metaBic[i](set, rName, cName, rPos, cPos);
                 }
 
             } else {
