@@ -268,7 +268,9 @@ minegraph.findLinks = function(obj1, obj2) {
  * @return created set
  */
 minegraph.addDocument = function(jsonDoc , x, y) {
-    console.log('new Document (' + jsonDoc["id"] + ')');
+
+    // console.log('new Document (' + jsonDoc["id"] + ')');
+
     var d = minegraph.graph.set();
     //set the properties
     d.type = "document";
@@ -332,13 +334,14 @@ minegraph.addDocument = function(jsonDoc , x, y) {
  * @return bic cluster set
  */
 minegraph.addBic = function(jsonBic, x, y) {
-    if (jsonBic.type == "bicluster") {
-        console.log('new BiCluster (' + jsonBic['id'] + ')');       
-    } else if (jsonBic.type == "thinBic") {
-        console.log('new thinBic (' + jsonBic['id'] + ')');
-    } else if (jsonBic.type == "metaBic") {
-        console.log('new metBic (' + jsonBic['id'] + ')');
-    }
+
+    // if (jsonBic.type == "bicluster") {
+    //     console.log('new BiCluster (' + jsonBic['id'] + ')');       
+    // } else if (jsonBic.type == "thinBic") {
+    //     console.log('new thinBic (' + jsonBic['id'] + ')');
+    // } else if (jsonBic.type == "metaBic") {
+    //     console.log('new metBic (' + jsonBic['id'] + ')');
+    // }
 
     var bic = minegraph.graph.set();
     var margin = 5;
@@ -682,10 +685,7 @@ minegraph.addBic = function(jsonBic, x, y) {
         bic.grid
     );
 
-
-    var mousedownflag = false;
-
-    
+   
     // adding hover event for common bicluster
     if (jsonBic.type == "bicluster" || jsonBic.type == "thinBic" ) {
         // mouse move in: changing color
@@ -712,7 +712,7 @@ minegraph.addBic = function(jsonBic, x, y) {
     /*
     * mouse down event for grid, coloring the grid and related documentss
     */
-
+    // var mousedownflag = false;
     // if (jsonBic.type == "thinBic") {
     //     bic.grid.mousedown(function(){
     //         // index for colors
@@ -840,7 +840,7 @@ minegraph.addBic = function(jsonBic, x, y) {
     // push bic to doc list
     minegraph.core.biclusters.push(bic);
 
-    console.log(minegraph.core.biclusters);
+    // console.log(minegraph.core.biclusters);
 
     // make sure bic isn't added ouside of graph.
     minegraph.clipSet(bic);
@@ -905,6 +905,12 @@ minegraph.clipSet = function(set) {
  * @return Object removed document
  */
 minegraph.removeDocument = function(document) {
+
+    // logging this interaction
+    console.log("======================================================"); 
+    var timeStamp = getCurrentTimeStamp();   
+    console.log(timeStamp + ', REMOVE_DOC, DOC_' + document.id + '\n');
+
     var index = minegraph.core.documents.indexOf(document);
     minegraph.core.documents.splice(index,1);
     document.remove();
@@ -920,7 +926,7 @@ minegraph.removeDocument = function(document) {
     }
 
     // log this interaction
-    console.log("Document " + document.id + " has been removed");
+    console.log("   SUCCESSFULLY REMOVED");
     
     return document;
 };
@@ -931,6 +937,12 @@ minegraph.removeDocument = function(document) {
  * @return Object removed Bicluster
  */
 minegraph.removeBicluster = function(bicluster) {
+
+    // logging this interaction
+    console.log("======================================================"); 
+    var timeStamp = getCurrentTimeStamp();   
+    console.log(timeStamp + ', REMOVE_BIC, BIC_' + bicluster.id + '\n');
+
     var index = minegraph.core.biclusters.indexOf(bicluster);
     minegraph.core.biclusters.splice(index,1);
     bicluster.remove();
@@ -945,7 +957,7 @@ minegraph.removeBicluster = function(bicluster) {
         minegraph.removeLink(links_to_remove[i]);
     }
 
-    console.log(bicluster.id + " has been removed.");
+    console.log("   SUCCESSFULLY REMOVED");
 
     return document;
 };
@@ -1248,7 +1260,7 @@ minegraph.link = function(obj1, obj2, userlink) {
     }else if (obj1.type == 'bicluster' && obj2.type == 'bicluster') {
         type = "bic2bic";
     }
-    console.log("new link of type " + type);
+    // console.log("new link of type " + type);
     //console.log(obj1);
     //console.log(obj2);
 
@@ -1266,7 +1278,7 @@ minegraph.link = function(obj1, obj2, userlink) {
                     //If it matches create a link between those cells
                     ent_b = ent_b*1;
                     if (obj1.source_data.rows[ent_a].name == obj2.source_data.rows[ent_b].name) {
-                        console.log("    Match: " + obj1.source_data.rows[ent_a].name);
+                        // console.log("    Match: " + obj1.source_data.rows[ent_a].name);
                         /* create links from cell ent_a to cell ent_b:
                            1 take the cell in the last col of row ent_a
                            2 link it to the last cell in col of row ent_b
@@ -1294,7 +1306,7 @@ minegraph.link = function(obj1, obj2, userlink) {
                     //If it matches create a link between those cells
                     ent_b = ent_b*1;
                     if (obj1.source_data.cols[ent_a].name == obj2.source_data.cols[ent_b].name) {
-                        console.log("    Match: " + obj1.source_data.cols[ent_a].name);
+                        // console.log("    Match: " + obj1.source_data.cols[ent_a].name);
                         cell_a = obj1.grid[(ent_a) + obj1.source_data.grid[0].length * (obj1.source_data.grid.length-1)];
                         cell_b = obj2.grid[(ent_b) + obj2.source_data.grid[0].length * (obj2.source_data.grid.length-1)];
                         link = this.create_line(cell_a, cell_b, type, obj1.type+obj1.id, obj2.type+obj2.id);
@@ -1317,7 +1329,7 @@ minegraph.link = function(obj1, obj2, userlink) {
                     //If it matches create a link between those cells
                     ent_b = ent_b*1;
                     if (obj1.source_data.cols[ent_a].name == obj2.source_data.rows[ent_b].name) {
-                        console.log("    Match: " + obj1.source_data.cols[ent_a].name);
+                        // console.log("    Match: " + obj1.source_data.cols[ent_a].name);
                         cell_a = obj1.grid[(ent_a) + obj1.source_data.grid[0].length * (obj1.source_data.grid.length-1)];
                         cell_b = obj2.grid[(ent_b+1) * obj2.source_data.grid[0].length - 1];
                         link = this.create_line(cell_a, cell_b, type, obj1.type+obj1.id, obj2.type+obj2.id);
@@ -1341,7 +1353,7 @@ minegraph.link = function(obj1, obj2, userlink) {
                     //If it matches create a link between those cells
                     ent_b = ent_b*1;
                     if (obj1.source_data.rows[ent_a].name == obj2.source_data.cols[ent_b].name) {
-                        console.log("    Match: " + obj1.source_data.rows[ent_a].name);
+                        // console.log("    Match: " + obj1.source_data.rows[ent_a].name);
                         cell_a = obj1.grid[(ent_a+1) * obj1.source_data.grid[0].length - 1];
                         cell_b = obj2.grid[(ent_b) + obj2.source_data.grid[0].length * (obj2.source_data.grid.length-1)];
                         link = this.create_line(cell_a, cell_b, type, obj1.type+obj1.id, obj2.type+obj2.id);
@@ -1356,7 +1368,7 @@ minegraph.link = function(obj1, obj2, userlink) {
                 }
             }
         } else {
-            console.log('    no type match, creating simple link');
+            // console.log('    no type match, creating simple link');
         }
     }
     /**
