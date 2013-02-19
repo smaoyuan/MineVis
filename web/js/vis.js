@@ -268,13 +268,11 @@ function init_Preview() {
         if ($("#preview .content").children().length > 0) {
             //console.log(preview_data);
             if (preview_data.type == "document") {
-                console.log("adding document to graph...");
                 graph_add_document(preview_data);
             } else if (preview_data.type == "bicluster") {
-                console.log("adding BiCluster to graph");
                 graph_add_bicluster(preview_data);
             } else if (preview_data.type == "link") {
-                console.log("adding Link to graph...");
+                // console.log("adding Link to graph...");
                 graph_add_link(preview_data);
             } else {
                 console.log("unknown preview type error");
@@ -551,10 +549,17 @@ function update_floating_menu_top(old_h, new_h) {
  * @param documentJSON JSON document data
  */
 function graph_add_document(documentJSON) {
+
+    // logging the interaction
+    var timeStamp = getCurrentTimeStamp();
+    console.log("======================================================");
+    console.log(timeStamp + ", ADD_DOC_TO_WORKSPACE, DOC_" + documentJSON.id + "\n");
+
     if (minegraph.findDocument(documentJSON.id) == null) {
         minegraph.addDocument(documentJSON, insert_location_x, insert_location_y);
         increment_insert_location();
     } else {
+        console.log("   DOC_" + documentJSON.id + " IS ALREADY IN THE WORKSPACE");
         minegraph.alert('This document is already in the graph.');
     }
 }
@@ -564,10 +569,17 @@ function graph_add_document(documentJSON) {
  * @param biclusterJSON JSON bicluster data
  */
 function graph_add_bicluster(biclusterJSON) {
+
+    // logging the interaction
+    var timeStamp = getCurrentTimeStamp();
+    console.log("======================================================");
+    console.log(timeStamp + ", ADD_BIC_TO_WORKSPACE, BIC_" + biclusterJSON.id + "\n");
+
     if (minegraph.findBiCluster(biclusterJSON.id) == null) {
         minegraph.addBic(biclusterJSON, insert_location_x, insert_location_y);
         increment_insert_location();
     } else {
+        console.log("   BIC_" + biclusterJSON.id + " IS ALREADY IN THE WORKSPACE");
         minegraph.alert('This bicluster is already in the graph');
     }
 }
@@ -986,6 +998,12 @@ function graph_show_document_biclusters(doc) {
  * @param linkJSON JSON link data
  */
 function graph_add_link(linkJSON) {
+
+    // logging the interaction
+    var timeStamp = getCurrentTimeStamp();
+    console.log("======================================================");
+    console.log(timeStamp + ", ADD_LINK_TO_WORKSPACE, ORIGIN_BIC_" + linkJSON.target.id + "\n");
+
     var existing_bic_notice = false; // has a notice been sent
     var d, x, y, l;
     var insert_count = 0;
@@ -1061,8 +1079,8 @@ function increment_insert_location() {
  * @param y int offset from y.
  */
 function increment_insert_location_x_y(x,y) {
-    console.log('insert_location_x' + insert_location_x);
-    console.log('insert_location_y' + insert_location_y);
+    // console.log('insert_location_x' + insert_location_x);
+    // console.log('insert_location_y' + insert_location_y);
     insert_location_x += x + insert_offset_x;
     if (insert_location_x > minegraph.width) {
         insert_location_x = insert_offset_x;
