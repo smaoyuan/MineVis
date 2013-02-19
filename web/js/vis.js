@@ -346,7 +346,7 @@ function init_Graph_Events() {
     minegraph.event('doc_show_bics', graph_show_document_biclusters);
 
     minegraph.event('bic_show_thin_bics', graph_show_thin_biclusters);
-    minegraph.event('thinBic_show_entity', graph_show_thinBic_entity);    
+    minegraph.event('thinBic_show_metaBic', graph_thinBic_show_metaBic);    
 }
 
 
@@ -659,38 +659,18 @@ function graph_show_bicluster_links(bic) {
 
 
 
-function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
-    // Request Parameters
-    // var request = new Object();
-    // request['vis_id'] = vis_id;
-    // request['ent_id'] = bic.id;
-    // request['type'] = 'show_thin_bic';
-
-    // // cancel ajax
-    // $.ajaxSetup({async:false});    
-
-    // // Ajax me so stuff
-    // $.get("request.json",
-    //     request,
-    //     function(response) {
-    //         alert(response);
-    // }); 
+function graph_show_thin_biclusters(bic, row_name, col_name, row_pos, col_pos, flag) {
 
     var bb = bic.getBBox();
     var x = bb.x + bb.width + 100;
     var y = 50;
     var d;
-    console.log('graph_show_thin_biclusters');
 
-    // basic structure for a thin bicluster
-    // var thinBic = new Array();
-    // thinBic["type"] = "thinBic";
-    // thinBic["id"] = "";
-    // thinBic["grid"] = [];
-    // thinBic["rows"] = [];
-    // thinBic["cols"] = [];
-    // thinBic["row_type"] = "";
-    // thinBic["col_type"] = "";
+    if (flag == 0) {
+        console.log('graph_show_thin_biclusters by row name');       
+    } else if(flag == 1) {
+        console.log('graph_show_thin_biclusters by col name')
+    }
 
     var thinBic = {
         type: 'thinBic',
@@ -704,6 +684,8 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
         flag_row_or_col: 0,
     }
 
+    thinBic["id"] = "(" + parseInt(bic.id) + ')(' + col_pos + ", " + row_pos + ", " + flag + ")";    
+
     var tmp = [];
     var tmpArray = [];
     var index = 0;
@@ -716,7 +698,7 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
         for (var i = 0; i < bic.xlabels.length; i++) {
             tmp[index] = $(bic.xlabels[i].node).text();
             index++;
-            console.log(tmp[i]);
+            // console.log(tmp[i]);
         }      
     }
 
@@ -725,7 +707,7 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
         for (var i = 0; i < bic.ylabels.length; i++) {
             tmp[index] = $(bic.ylabels[i].node).text();
             index++;
-            console.log(tmp[i]);
+            // console.log(tmp[i]);
         }
     }
 
@@ -739,7 +721,7 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
     $.get("request.json",
         request,
         function(response) {
-            console.log(response);
+            // console.log(response);
             for(var i = 0; i < response.length; i++) {
 
                 // match the name by row
@@ -790,14 +772,8 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                 // insert col_name into this array
                 tmp.splice(0, 0, col_name);
 
-                // for (var i = 0; i < tmp.length; i++) {
-                //     console.log(tmp[i] + "\n");
-                // }
-
                 // remove the repeat elements in this array
                 removeRepeat(tmp);
-
-                thinBic["id"] = parseInt(bic.id) + ', \"' + row_name + '\" by row';
 
                 thinBic["rows"] = new Array(1);
                 thinBic["rows"][0] = [];
@@ -830,12 +806,8 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                 // remove the repeat elements in this array
                 removeRepeat(tmp);
 
-                // for (var i = 0; i < tmp.length; i++) {
-                //     console.log(tmp[i]);
-                // }
-
-                thinBic["id"] = parseInt(bic.id) + '\"' + col_name + '\" by col';
-                console.log(thinBic["id"]);
+                // thinBic["id"] = parseInt(bic.id) + '\"' + col_name + '\" by col';
+                // console.log(thinBic["id"]);
 
                 thinBic["cols"] = new Array(1);
                 thinBic["cols"][0] = [];
@@ -849,8 +821,6 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
                     thinBic["rows"][i]["name"] = tmp[i];
                     // console.log("cols name: " + thinBic.cols[i].name);
                 }
-
-                console.log(thinBic["rows"]);
 
                 thinBic["grid"] = new Array(tmp.length);
                 for (var i = 0; i < tmp.length; i++) {
@@ -881,12 +851,12 @@ function graph_show_thin_biclusters(bic, row_name, col_name, flag) {
 }
 
 
-function graph_show_thinBic_entity (bic, row_name, col_name) {
+function graph_thinBic_show_metaBic(bic, row_name, col_name, row_pos, col_pos) {
     var bb = bic.getBBox();
     var x = bb.x + bb.width + 100;
     var y = 50;
     var d;
-    console.log('thinBic_show_entity');
+    console.log('thinBic_show_metaBic');
 
     var metaBic = {
         type: 'metaBic',
@@ -898,8 +868,7 @@ function graph_show_thinBic_entity (bic, row_name, col_name) {
         col_type: '',
     }
 
-    metaBic.id = row_name + "+" + col_name;
-    console.log(metaBic.id);
+    metaBic.id = bic.id + "(" + row_pos + ", " + col_pos + ")";
 
     metaBic["rows"] = new Array(1);
     metaBic["rows"][0] = [];
@@ -914,8 +883,6 @@ function graph_show_thinBic_entity (bic, row_name, col_name) {
     metaBic["grid"] = new Array(1);
     metaBic.grid[0] = [];
     metaBic.grid[0][0] = 2;
-
-    console.log(metaBic.grid[0][0]);
 
     // Find or add BiCluster
     d = minegraph.findBiCluster(metaBic.id);
@@ -932,7 +899,6 @@ function graph_show_thinBic_entity (bic, row_name, col_name) {
     } else {
         console.log("Biclusters " + bic.id + " & " + metaBic.id + " are already linked");
     }      
-
 }
 
 
