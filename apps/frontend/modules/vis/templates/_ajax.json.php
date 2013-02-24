@@ -365,6 +365,48 @@ if ($type == "ent-search-autocomplete") {
     }
 
     echo json_encode($biclusters);
+} else if ($type == 'show_thin_bic') {
+
+    /*
+    * to find the big bicluster in mining
+    */
+
+    // $vis_id = 'single_bicluster_' . $ent_id;
+
+
+    // echo $var;
+     // $var = array();
+
+    // $var[] = "string";
+    // $var[1] = "abc";
+    // $arr = array('a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, 'e' => 5);
+    // echo json_encode($arr);
+
+
+        $row_configs = array();
+        $col_configs = array();
+
+        foreach ($project->getProjectConfig() as $conf) {
+            /**
+             * Entity could be in a bic row
+             */
+            if ($conf->getTableA() == $ent_type) {
+                $row_configs[] = $conf;
+            }
+            /**
+             * Entity could be in a bic col
+             */
+            if ($conf->getTableB() == $ent_type) {
+                $col_configs[] = $conf;
+            }
+        }
+
+
+
+
+
+
+
 } else if ($type == 'show_doc_bics') {
     /**
      * Show Document's Biclusters

@@ -22,6 +22,7 @@ var lhrd_mode = false;
  * list things here
  */
 $(document).ready(function() {
+
     /*
      * Initialize UI
      */
@@ -275,7 +276,7 @@ function init_Preview() {
                 // console.log("adding Link to graph...");
                 graph_add_link(preview_data);
             } else {
-                console.log("unknown preview type error");
+                // console.log("unknown preview type error");
             }
         }
         return false;
@@ -361,7 +362,7 @@ function init_Graph_Events() {
  */
 function lhrd_mode_toggle() {
     if (lhrd_mode) {
-            console.log("Disabling LHRD Mode");
+            // console.log("Disabling LHRD Mode");
             lhrd_mode = false;
             // Dynamically remove extra css.
             var stylesheets = $("head link[rel=stylesheet]");
@@ -373,7 +374,7 @@ function lhrd_mode_toggle() {
             }
             $('#preview').css('top', floating_preview_top+'px');
         } else {
-            console.log("Enabling LHRD Mode");
+            // console.log("Enabling LHRD Mode");
             lhrd_mode = true;
             // Dynamically load extra css.
             var path = $("head link[rel=stylesheet]:first").attr('href');
@@ -391,7 +392,7 @@ function lhrd_mode_toggle() {
 * auto save every 10 or so seconds
 */
 function autosave() {
-    console.log('auto save starting...');
+    // console.log('auto save starting...');
     save_minegraph();
 }
 
@@ -402,8 +403,7 @@ function save_minegraph() {
 
     // logging current interaction
     var timeStamp = getCurrentTimeStamp();
-    console.log("======================================================");
-    console.log(timeStamp + ', SAVE_DATA');
+    console.log(timeStamp + ', SAVE_DATA \n');
 
     //get save
     var minegraphSave = minegraph.save();
@@ -418,12 +418,11 @@ function save_minegraph() {
     $.post("save",
         data,
         function(response) {
-            console.log("   WORKSPACE SUCCESFULLY SAVED");
-        //console.log(response);
+            // console.log("   WORKSPACE SUCCESFULLY SAVED");
         },
         'html'
         ).error(function() {
-        console.log("   SAVE AJAX REQUEST FAILED");
+        // console.log("   SAVE AJAX REQUEST FAILED");
     });
 
     //Update last save time
@@ -434,10 +433,12 @@ function save_minegraph() {
 * Load it from ajax datas
 */
 function load_minegraph() {
-    console.log(vis_data);
+
+    // console.log(vis_data);
+    
     /* Check if save contains anything */
     if (vis_data) {
-        console.log('LOADING DATA');
+        // console.log('LOADING DATA');
 
         /* load size */
         update_floating_menu_top(minegraph.height, vis_data.height);
@@ -449,25 +450,29 @@ function load_minegraph() {
         }
 
         /* load documents */
-        console.log("LOADING DOCS...");
+        // console.log("LOADING DOCS...");
         var d;
         for(var i=0; i < vis_data.documents.length; i++) {
             d = vis_data.documents[i];
-            //console.log(d);
+
+            // console.log(d);
+
             minegraph.addDocument(d.data, d.x, d.y);
         }
 
         /* load biclusters */
-        console.log("LOADING BICS...");
+        // console.log("LOADING BICS...");
         var b;
         for(i=0; i < vis_data.biclusters.length; i++) {
             b = vis_data.biclusters[i];
-            //console.log(b);
+
+            // console.log(b);
+
             minegraph.addBic(b.data, b.x, b.y);
         }
 
         /* load links */
-        console.log("LOADING LINKS...");
+        // console.log("LOADING LINKS...");
         var l,from,to, links;
         var links_to_remove; //must be queued
         for(i=0; i < vis_data.links.length; i++) {
@@ -501,11 +506,13 @@ function load_minegraph() {
         }
 
         /* load highlights */
-        console.log("LOADING HIGHLIGHTS...");
+        // console.log("LOADING HIGHLIGHTS...");
         var h;
         for(i=0; i < vis_data.highlights.length; i++) {
             h = vis_data.highlights[i];
-            //console.log(h);
+
+            // console.log(h);
+            
             // Find Objects
             from = minegraph.findFromTypeId(h.tid1);
             to = minegraph.findFromTypeId(h.tid2);
@@ -521,14 +528,14 @@ function load_minegraph() {
                     }
                 }
             } else {
-                console.log("error! cannot find link for highlight: ");
-                console.log(h);
+                // console.log("error! cannot find link for highlight: ");
+                // console.log(h);
             }
         }
 
-        console.log("LOADING COMPLETE");
+        // console.log("LOADING COMPLETE");
     } else {
-        console.log('NO DATA TO LOAD, NEW WORKSPACE');
+        // console.log('NO DATA TO LOAD, NEW WORKSPACE');
     }
 }
 
@@ -552,14 +559,13 @@ function graph_add_document(documentJSON) {
 
     // logging the interaction
     var timeStamp = getCurrentTimeStamp();
-    console.log("======================================================");
     console.log(timeStamp + ", ADD_DOC_TO_WORKSPACE, DOC_" + documentJSON.id + "\n");
 
     if (minegraph.findDocument(documentJSON.id) == null) {
         minegraph.addDocument(documentJSON, insert_location_x, insert_location_y);
         increment_insert_location();
     } else {
-        console.log("   DOC_" + documentJSON.id + " IS ALREADY IN THE WORKSPACE");
+        // console.log("   DOC_" + documentJSON.id + " IS ALREADY IN THE WORKSPACE");
         minegraph.alert('This document is already in the graph.');
     }
 }
@@ -572,14 +578,13 @@ function graph_add_bicluster(biclusterJSON) {
 
     // logging the interaction
     var timeStamp = getCurrentTimeStamp();
-    console.log("======================================================");
     console.log(timeStamp + ", ADD_BIC_TO_WORKSPACE, BIC_" + biclusterJSON.id + "\n");
 
     if (minegraph.findBiCluster(biclusterJSON.id) == null) {
         minegraph.addBic(biclusterJSON, insert_location_x, insert_location_y);
         increment_insert_location();
     } else {
-        console.log("   BIC_" + biclusterJSON.id + " IS ALREADY IN THE WORKSPACE");
+        // console.log("   BIC_" + biclusterJSON.id + " IS ALREADY IN THE WORKSPACE");
         minegraph.alert('This bicluster is already in the graph');
     }
 }
@@ -593,7 +598,6 @@ function graph_show_bicluster_documents(bic) {
 
     // logging current interaction
     var timeStamp = getCurrentTimeStamp();
-    console.log("======================================================");
     console.log(timeStamp + ', BIC_SHOW_DOCS, BIC_' + bic.id + '\n');
 
     // Request Parameters
@@ -606,7 +610,6 @@ function graph_show_bicluster_documents(bic) {
     $.get("request.json",
         request,
         function(response) {
-            //console.log(response);
             var d,x,y;
             x = bb.x + bb.width + 50;
             y = 10;
@@ -617,13 +620,13 @@ function graph_show_bicluster_documents(bic) {
                     d = minegraph.addDocument(response[i], x, y);
                     y += d.height + 10;
                 } else {
-                    console.log('   DOC_' + d.id + ' ALREADY IN THE WORKSPACE');
+                    // console.log('   DOC_' + d.id + ' ALREADY IN THE WORKSPACE');
                 }
                 // Try to link
                 if (minegraph.findLinks(bic, d).length == 0) {
                     minegraph.link(bic, d);
                 } else {
-                    console.log('   DOC_' + d.id + ' ALREADY LINKED TO BIC_' + bic.id);
+                    // console.log('   DOC_' + d.id + ' ALREADY LINKED TO BIC_' + bic.id);
                 }
             }
         },
@@ -645,7 +648,6 @@ function graph_show_bicluster_links(bic) {
 
     // logging current interaction
     var timeStamp = getCurrentTimeStamp();
-    console.log("======================================================");
     console.log(timeStamp + ', FIND_BICS_FROM_BIC, BIC_' + bic.id + '\n');
 
     // Request Parameters
@@ -658,7 +660,6 @@ function graph_show_bicluster_links(bic) {
     $.get("request.json",
         request,
         function(response) {
-            // console.log(response);
             for( var i=0; i < response.length; i++) {
                 // Find or add BiCluster
                 d = minegraph.findBiCluster(response[i].id);
@@ -666,13 +667,13 @@ function graph_show_bicluster_links(bic) {
                     d = minegraph.addBic(response[i], x, y);
                     y += d.height + 30;
                 } else {
-                    console.log("   BIC_" + response[i].id + " IS ALREADY IN THE WORKSPACE");
+                    // console.log("   BIC_" + response[i].id + " IS ALREADY IN THE WORKSPACE");
                 }
                 // Link them if not already linked
                 if (minegraph.findLinks(bic, d).length == 0) {
                     minegraph.link(bic, d);
                 } else {
-                    console.log("   BIC_" + bic.id + " & BIC_" + response[i].id + " ARE ALREADY LINKED");
+                    // console.log("   BIC_" + bic.id + " & BIC_" + response[i].id + " ARE ALREADY LINKED");
                 }
             }
         },
@@ -692,7 +693,6 @@ function graph_show_thin_biclusters(bic, row_name, col_name, row_pos, col_pos, f
     var d;
 
     // logging current interaction
-    console.log("======================================================");
     var currentTimeStamp = getCurrentTimeStamp();   
     if (flag == 0) {
         console.log(currentTimeStamp + ', BIC_SHOW_THIN_BIC_BY_ROW_NAME, BIC_' + bic.id + '\n');       
@@ -701,7 +701,9 @@ function graph_show_thin_biclusters(bic, row_name, col_name, row_pos, col_pos, f
     }
 
     var thinBic = {
-        type: 'thinBic',
+        // type: 'thinBic',
+        type: "bicluster",
+        logName: 'THIN_BIC',
         id: '',
         grid: [],
         rows: [],
@@ -861,14 +863,14 @@ function graph_show_thin_biclusters(bic, row_name, col_name, row_pos, col_pos, f
                 d = minegraph.addBic(thinBic, x, y);
                 y += d.height + 30;
             } else {
-                console.log("   THIN_BIC_" + thinBic.id + " IS ALREADY IN THE WORKSPACE");
+                // console.log("   THIN_BIC_" + thinBic.id + " IS ALREADY IN THE WORKSPACE");
             }
 
             // Link them if not already linked
             if (minegraph.findLinks(bic, d).length == 0 && bic.id != d.id) {
                 minegraph.link(bic, d);
             } else {
-                console.log("   BIC_" + bic.id + " & THIN_BIC_" + thinBic.id + " ARE ALREADY LINKED");
+                // console.log("   BIC_" + bic.id + " & THIN_BIC_" + thinBic.id + " ARE ALREADY LINKED");
             }
     });  
 }
@@ -881,12 +883,13 @@ function graph_thinBic_show_metaBic(bic, row_name, col_name, row_pos, col_pos) {
     var d;
 
     // logging current interaction
-    console.log("======================================================");
     var timeStamp = getCurrentTimeStamp();
     console.log(timeStamp + ', THIN_BIC_SHOW_META_BIC, BIC_' + bic.id + '\n');
 
     var metaBic = {
-        type: 'metaBic',
+        // type: 'metaBic',
+        type: "bicluster",
+        logName: 'META_BIC',
         id: '',
         grid: [],
         rows: [],
@@ -917,14 +920,14 @@ function graph_thinBic_show_metaBic(bic, row_name, col_name, row_pos, col_pos) {
         d = minegraph.addBic(metaBic, x, y);
         y += d.height + 30;
     } else {
-        console.log("   META_BIC_" + metaBic.id + " IS ALREADY IN THE WORKSPACE");
+        // console.log("   META_BIC_" + metaBic.id + " IS ALREADY IN THE WORKSPACE");
     }  
 
     // Link them if not already linked
     if (minegraph.findLinks(bic, d).length == 0 && bic.id != d.id) {
         minegraph.link(bic, d);
     } else {
-        console.log("   THIN_BIC_" + bic.id + " & META_BIC_" + metaBic.id + " ARE ALREADY LINKED");
+        // console.log("   THIN_BIC_" + bic.id + " & META_BIC_" + metaBic.id + " ARE ALREADY LINKED");
     }      
 }
 
@@ -956,7 +959,6 @@ function graph_show_document_biclusters(doc) {
     var b;
 
     // logging this interaction
-    console.log("======================================================"); 
     var timeStamp = getCurrentTimeStamp();   
     console.log(timeStamp + ', DOC_SHOW_BICS, DOC_' + doc.id + '\n');
 
@@ -976,13 +978,13 @@ function graph_show_document_biclusters(doc) {
                     b = minegraph.addBic(response[i], x, y);
                     y += b.height + 30;
                 } else {
-                    console.log("   BIC_" + response[i].id + " IS ALREADY IN THE WORKSPACE");
+                    // console.log("   BIC_" + response[i].id + " IS ALREADY IN THE WORKSPACE");
                 }
                 // Link them if not already linked
                 if (minegraph.findLinks(doc, b).length == 0) {
                     minegraph.link(doc, b);
                 } else {
-                    console.log("   DOC_" + doc.id + " & BIC_" + b.id + " ARE ALREADY LINKED");
+                    // console.log("   DOC_" + doc.id + " & BIC_" + b.id + " ARE ALREADY LINKED");
                 }
             }
         },
@@ -1001,7 +1003,6 @@ function graph_add_link(linkJSON) {
 
     // logging the interaction
     var timeStamp = getCurrentTimeStamp();
-    console.log("======================================================");
     console.log(timeStamp + ", ADD_LINK_TO_WORKSPACE, ORIGIN_BIC_" + linkJSON.target.id + "\n");
 
     var existing_bic_notice = false; // has a notice been sent
@@ -1197,7 +1198,6 @@ function improve_item_lists(div) {
     // into links that can expand/collapse the
     // tree leaf.
     $(div +' li > ul').each(function(i) {
-        //console.log(i);
         // Find this list's parent list item.
         var parent_li = $(this).parent('li');
 

@@ -12,6 +12,7 @@ $var = 'bicluster_data_' . $vis_count;
 
     //drawing script
     $(document).ready(function() {
+    	// console.log(<?php echo $var; ?>);
         simpleBiClusterVis(<?php echo $var . ', "' . $vis_id . '"'; ?>)
     });
 </script>
