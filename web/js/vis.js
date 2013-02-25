@@ -898,7 +898,9 @@ function graph_thinBic_show_metaBic(bic, row_name, col_name, row_pos, col_pos) {
         col_type: '',
     }
 
-    metaBic.id = bic.id + "(" + row_pos + ", " + col_pos + ")";
+    // metaBic.id = bic.id + "(" + row_pos + ", " + col_pos + ")";
+
+    metaBic.id = '(\"' + row_name + '\", \"' +  col_name + '\")';
 
     metaBic["rows"] = new Array(1);
     metaBic["rows"][0] = [];
