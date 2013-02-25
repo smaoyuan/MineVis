@@ -446,6 +446,8 @@ minegraph.addBic = function(jsonBic, x, y) {
         }
     } else if (jsonBic.logName == "META_BIC") {
         t = "metaBic";
+    } else if (jsonBic.logName == "COMB_BIC") {
+        t = "combBic";
     } else {
         t = "Bic " + jsonBic.id; 
         dx = x + (gridX * cellW + 2 * margin) * 3 / 4;       
