@@ -652,7 +652,7 @@ minegraph.addBic = function(jsonBic, x, y) {
                     fill: minegraph.core.colors.orange_2_80,
                     'stroke-width' : 2,
                     'stroke-opacity': 0,
-                    cursor: "pointer"
+                    // cursor: "pointer"
                 });
 
                 if (c == 0 && r == 0)
@@ -674,29 +674,23 @@ minegraph.addBic = function(jsonBic, x, y) {
                 dy = y + margin + r * cellH;
                 var rectangle = minegraph.graph.rect(dx, dy, cellW-cellSpacing, cellH-cellSpacing, 2);
 
-                minegraph.core.colors.orange_2_80 = color_metaBic; 
+                // console.log("r: " + r + ", c: " + c + ", grid: " + jsonBic.grid[r][c]);
 
-
-                for (var i = 0; i < jsonBic.grid.length; i++) {
-                    for (var j = 0; j < jsonBic.grid[i].length; j++) {
-                        if (jsonBic.grid[i][j] == 2) {
-                             rectangle.attr({
-                                fill: minegraph.core.colors.orange_2_80,
-                                'stroke-width' : 2,
-                                'stroke-opacity': 0,
-                                cursor: "pointer"
-                            });                           
-                        }
-                    }
+                if (jsonBic.grid[r][c] == 2) {
+                     rectangle.attr({
+                        fill: color_combBic,
+                        'stroke-width' : 2,
+                        'stroke-opacity': 0,
+                        cursor: "pointer"
+                    });                           
+                } else if (jsonBic.grid[r][c] == 0) {
+                     rectangle.attr({
+                        fill: color_empty_grid,
+                        'stroke-width' : 2,
+                        'stroke-opacity': 0,
+                        cursor: "pointer"
+                    });                             
                 }
-                // console.log(jsonBic.grid);                 
-
-                // rectangle.attr({
-                //     fill: minegraph.core.colors.orange_2_80,
-                //     'stroke-width' : 2,
-                //     'stroke-opacity': 0,
-                //     cursor: "pointer"
-                // });
 
                 if (c == 0 && r == 0)
                     startID = rectangle.id;
@@ -1004,7 +998,8 @@ minegraph.addBic = function(jsonBic, x, y) {
     if (jsonBic.logName == "THIN_BIC") {
         minegraph.set_thinBic_context_menu(bic);
         minegraph.set_thinBic_grid_context_menu(bic);        
-    } else if (jsonBic.logName == "META_BIC") {
+    } else if (jsonBic.logName == "META_BIC" 
+        || jsonBic.logName == "COMB_BIC") {
         minegraph.set_metaBic_context_menu(bic);        
     } else {
         minegraph.set_bic_context_menu(bic);  
@@ -1355,20 +1350,24 @@ function getTargetType(obj) {
     var type = "";
 
     if (obj.type == "bicluster") {
-        switch(judge.length){
-            case 1:
-                type = "BIC_";
-                break;
-            case 3:
-                type = "THIN_BIC_";
-                break;
-            case 4:
-                type = "META_BIC_";
-                break;
-            default:
-                type = "UKNOWN";
-                break;
-        }       
+        if (obj.id.indexOf("&") > 0) {
+            type = "COMB_BIC_";
+        } else {
+            switch(judge.length){
+                case 1:
+                    type = "BIC_";
+                    break;
+                case 3:
+                    type = "THIN_BIC_";
+                    break;
+                case 2:
+                    type = "META_BIC_";
+                    break;
+                default:
+                    type = "UKNOWN";
+                    break;
+            } 
+        }      
     }
     else {
         type = "DOC_";
@@ -1412,12 +1411,35 @@ minegraph.combining = function(obj) {
         //Reset for next link
         this.core.linking_obj1 = null;
 
-        if (obj1 != obj) {
 
+        // flag to indicate whether the combined interation should be performed
+        var needCombined = 0;
+        var count = 0;   
+        
+        // check whether the exsiting biclusters contain the two to be combined
+        for(var i = 0; i < minegraph.core.biclusters.length; i++) {
+            b = minegraph.core.biclusters[i];
+            var idOne = obj1.id + " & " + obj.id;
+            var idTwo = obj.id + " & " + obj1.id;
+            if ((b.id != idOne) && (b.id != idTwo)) {
+                count++;
+            }
+        } 
+
+        // all existing biclusters does not contain the two to be combined
+        if (count == minegraph.core.biclusters.length) {
+            needCombined = 1;
+        }
+
+        if ((obj1 != obj) && (needCombined == 1)
+            && (obj1.id.indexOf(obj.id) == -1) && (obj.id.indexOf(obj1.id) == -1)) {
             this.combine(obj1, obj);
-
+        } else if (needCombined == 0) {
+            minegraph.alert("They have been already combined!"); 
+        } else if ((obj1.id.indexOf(obj.id) != -1) && (obj.id.indexOf(obj1.id) != -1)) {
+            minegraph.alert("Can't combine an item to itself!");            
         } else {
-            minegraph.alert("Can't combine an item to itself!");
+            minegraph.alert("The big CombBic contains this Bic!");             
         }
     }
 };
@@ -1460,7 +1482,7 @@ minegraph.combine = function(obj1, obj2) {
         grid: [],
         rows: [],
         cols: [],
-        relationExist:[], 
+        relationExist: [], 
         row_type: '',
         col_type: '',
     }
@@ -1475,7 +1497,8 @@ minegraph.combine = function(obj1, obj2) {
 
     var tmp_ylables = new Array(obj1.ylabels.length + obj2.ylabels.length);
     var tmp_xlables = new Array(obj1.xlabels.length + obj2.xlabels.length);
-
+    
+    // copy all the ylables
     for (var i = 0; i < obj1.ylabels.length; i++) {
         tmp_ylables[i] = $(obj1.ylabels[i]).text();
         // console.log(tmp_ylables[i]);
@@ -1484,6 +1507,7 @@ minegraph.combine = function(obj1, obj2) {
         tmp_ylables[j + obj1.ylabels.length] = $(obj2.ylabels[j]).text();
     }
 
+    // copy all the xlabels
     for (var i = 0; i < obj1.xlabels.length; i++) {
         tmp_xlables[i] = $(obj1.xlabels[i]).text();
     }
@@ -1491,6 +1515,7 @@ minegraph.combine = function(obj1, obj2) {
         tmp_xlables[j + obj1.xlabels.length] = $(obj2.xlabels[j]).text();
     }
 
+    // delete repeat lables
     removeRepeat(tmp_ylables);
     removeRepeat(tmp_xlables);
   
@@ -1508,15 +1533,71 @@ minegraph.combine = function(obj1, obj2) {
         combinedBic["cols"][i]["col"] = "";       
     }
 
+    /*
+    * set up a map to store the relationship
+    * first index is a row name
+    * second index is a col name
+    * 0: no relationship;   1: relationship exists
+    */
+    combinedBic["relationExist"] = new Array();
+    for (var i = 0; i < tmp_ylables.length; i++) {
+        combinedBic["relationExist"][tmp_ylables[i]] = new Array();
+        for (var j = 0; j < tmp_xlables.length; j++) {
+                combinedBic["relationExist"][tmp_ylables[i]][tmp_xlables[j]] = 0;
+                // console.log("ylabels: " + tmp_ylables[i]);
+                // console.log("xlabels: " + tmp_xlables[j]);
+                // console.log(combinedBic["relationExist"][tmp_ylables[i]][tmp_xlables[j]]);
+        }        
+    }
+
+
+    for (var i = 0; i < obj1.ylabels.length; i++) {
+        for (var j = 0; j < obj1.xlabels.length; j++) {
+            if ($(obj1.grid[i * obj1.xlabels.length + j].node).css("fill") != '#e6e6e6') {
+                combinedBic["relationExist"][$(obj1.ylabels[i]).text()][$(obj1.xlabels[j]).text()] = 1; 
+                // console.log($(obj1.ylabels[i]).text());
+                // console.log($(obj1.xlabels[j]).text());
+            }
+        }
+    }
+
+    for (var i = 0; i < obj2.ylabels.length; i++) {
+        for (var j = 0; j < obj2.xlabels.length; j++) {
+            if ($(obj2.grid[i * obj2.xlabels.length + j].node).css("fill") != '#e6e6e6') {
+                combinedBic["relationExist"][$(obj2.ylabels[i]).text()][$(obj2.xlabels[j]).text()] = 1; 
+            }
+        }
+    }
+
+    // for (var i = 0; i < tmp_ylables.length; i++) {
+    //     for (var j = 0; j < tmp_xlables.length; j++) {
+    //             console.log("ylabels: " + tmp_ylables[i]);
+    //             console.log("xlabels: " + tmp_xlables[j]);
+    //             console.log(combinedBic["relationExist"][tmp_ylables[i]][tmp_xlables[j]]);
+    //     }        
+    // }
+
+
     combinedBic["grid"] = new Array(tmp_ylables.length);
     for (var i = 0; i < tmp_ylables.length; i++) {
         combinedBic.grid[i] = new Array(tmp_xlables.length); 
         for (var j = 0; j < tmp_xlables.length; j++) {
-            combinedBic.grid[i][j] = 2;           
+            if (combinedBic["relationExist"][tmp_ylables[i]][tmp_xlables[j]] == 1) {
+                combinedBic.grid[i][j] = 2;
+            }
+            else {
+                combinedBic.grid[i][j] = 0;                
+            }
         }      
     }
 
-    console.log(obj1.grid);
+
+    // for (var i = 0; i < combinedBic.grid.length; i++) {
+    //     for (var j = 0; j < combinedBic.grid[0].length; j++) {
+    //         console.log("i: " + i + ", j: " + j + ", grid: " + combinedBic.grid[i][j]);
+    //     }
+    // }
+
 
     // Find or add BiCluster
     d = minegraph.findBiCluster(combinedBic.id);
@@ -2287,8 +2368,10 @@ var color_level7 = 'rgba(178, 71, 0, 0.8)',
     color_thinBic_by_row = 'rgba(255, 255, 51, 0.8)',
     color_thinBic_by_col = 'rgba(0, 255, 0, 0.8)',
     color_metaBic = 'rgba(102, 102, 255, 0.8)',
+    color_combBic = 'rgba(255, 209, 25, 0.8)'  //'rgba(255, 214, 51, 0.8)',
+    color_empty_grid = 'rgba(230, 230, 230, 0.8)',
     // color used for the selected cells
-    color_grid_selected = "rgba(156, 89, 66, 0.8)";   // "rgba(131, 111, 255, 0.7)"     
+    color_grid_selected = "rgba(156, 89, 66, 0.8)";    
 
 /*
 * two array mapping the state name with its abbreviation
